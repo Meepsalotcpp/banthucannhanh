@@ -547,7 +547,12 @@ JPanel TimKiem=new JPanel(null);
 
     private void LamMoi() {
         table_KhachHang.clear();
-        for (KhachHangDTO DTO : KhachHangBUS.dskh) {
+        try{
+            BUS.docDSKH();
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Lỗi đọc dữ liệu");
+        }
+        for (KhachHangDTO DTO : BUS.dskh) {
             if (DTO.getTrangThai().equals("Hiện")) {
                 table_KhachHang.addRow(DTO);
             }

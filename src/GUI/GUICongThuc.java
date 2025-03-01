@@ -12,6 +12,7 @@ import BUS.NguyenLieuBUS;
 import BUS.Tool;
 import DTO.ChiTietNguyenLieuDTO;
 import DTO.CongThucDTO;
+import DTO.MonAnDTO;
 import DTO.NguyenLieuDTO;
 import Excel.DocExcel;
 import Excel.XuatExcel;
@@ -136,12 +137,13 @@ public class GUICongThuc extends GUIFormContent{
         Xoa.setBorder(BorderFactory.createLineBorder(Color.decode("#90CAF9"), 1));
         Xoa.setBackground(Color.decode("#90CAF9"));
         Xoa.setBounds(510, 0, 70, 30);
-        Xoa.addMouseListener(new MouseAdapter(){
-            @Override
-            public void mousePressed(MouseEvent evt){
-                Xoa_click(evt);
-            }
-        });
+        Xoa.setEnabled(false);
+        // Xoa.addMouseListener(new MouseAdapter(){
+        //     @Override
+        //     public void mousePressed(MouseEvent evt){
+        //         Xoa_click(evt);
+        //     }
+        // });
         CongCu.add(Xoa);
         //Nút nhập excel
         JButton NhapExcel=new JButton("Nhập Excel");
@@ -838,7 +840,7 @@ public class GUICongThuc extends GUIFormContent{
         }
         }
         
-        for (CongThucDTO DTO : CongThucBUS.CT) {
+        for (CongThucDTO DTO : BUS.CT) {
             if (DTO.getTrangThai().equals("Hiện")) {
                 table_CongThuc.addRow(DTO);
                     
@@ -848,17 +850,7 @@ public class GUICongThuc extends GUIFormContent{
     //Hàm khi ấn nút làm mới
     private void LamMoi(){
         table_CongThuc.clear();
-        try{
-            CongThucBUS ctBUS = new CongThucBUS();
-            ctBUS.docCT();
-            for (CongThucDTO DTO : ctBUS.CT) {
-                if (DTO.getTrangThai().equals("Hiện")) {
-                    table_CongThuc.addRow(DTO);
-                }
-            }
-        }catch(Exception ex){
-            return;
-        }
+        docDB();
     }
     @Override
     protected JPanel TimKiem(){

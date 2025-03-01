@@ -141,7 +141,6 @@ public class XuatExcel {
                 row.createCell(1, CellType.STRING).setCellValue(nl.getTenNguyenLieu());
                 row.createCell(2, CellType.NUMERIC).setCellValue(nl.getDonGia());
                 row.createCell(3, CellType.STRING).setCellValue(nl.getHinhAnh());
-                row.createCell(4, CellType.STRING).setCellValue(nl.getLoai());
                 row.createCell(5, CellType.STRING).setCellValue(nl.getDonViTinh());
                 row.createCell(6, CellType.NUMERIC).setCellValue(nl.getSoLuong());
             }

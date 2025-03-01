@@ -437,7 +437,12 @@ public class GUIKhuyenMai extends GUIFormContent {
     //Hàm khi ấn nút làm mới
     private void LamMoi() {
         table_KhuyenMai.clear();
-        for (KhuyenMaiDTO DTO : KhuyenMaiBUS.dskm) {
+        try{
+            BUS.docDSKM();
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Lỗi đọc dữ liệu");
+        }
+        for (KhuyenMaiDTO DTO : BUS.dskm) {
             if (DTO.getTrangThai().equals("Hiện")) {
                 table_KhuyenMai.addRow(DTO);
             }

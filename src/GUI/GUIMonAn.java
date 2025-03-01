@@ -891,12 +891,6 @@ public class GUIMonAn extends GUIFormContent {
         else if (!Tool.isNumber(DonGia)) {
             JOptionPane.showMessageDialog(null, "Đơn giá phải là số nguyên dương");
             txt_MonAn_Sua[3].requestFocus();
-        } else if (!Tool.isName((DonGia))) {
-            JOptionPane.showMessageDialog(null, "Đơn giá không được chứa ký tự đặc biệt");
-            txt_MonAn_Sua[3].requestFocus();
-        } else if (!Tool.isTenThousandToOneMil(DonGia)) {
-            JOptionPane.showMessageDialog(null, "Đơn giá phải nằm trong khoảng 10.000 đến 1.000.000");
-            txt_MonAn_Sua[3].requestFocus();
         }
         
         else if (!Tool.isHinhAnh(HinhAnh)) {
@@ -941,7 +935,7 @@ public class GUIMonAn extends GUIFormContent {
             MonAnDTO DTO = new MonAnDTO(txt_MonAn_Sua[0].getText(),
                     txt_MonAn_Sua[1].getText(),
                     cbDonViTinh_Sua.getSelectedItem().toString(),
-                    Integer.parseInt(txt_MonAn_Sua[3].getText()),
+                    Float.parseFloat(txt_MonAn_Sua[3].getText()),
                     txt_MonAn_Sua[4].getText(),
                     cbLoai_Sua.getSelectedItem().toString() );
             //Tìm vị trí của row cần sửa
@@ -1256,22 +1250,18 @@ public class GUIMonAn extends GUIFormContent {
     //Hàm khi ấn nút làm mới
     private void LamMoi() throws SQLException, Exception {
         table_MonAn.clear();
-        for (MonAnDTO DTO : MonAnBUS.dsMonAn) {
+        try{
+            BUS.docDSMonAn();
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Lỗi đọc dữ liệu");
+        }
+        for (MonAnDTO DTO : BUS.dsMonAn) {
              if (DTO.getTrangThai().equals("Hiện")) {
                  table_MonAn.addRow(DTO);
              }
-         }
+        }
 
 
-         try {
-             ArrayList<MonAnDTO> dsma = new ArrayList<MonAnDTO>();
-             dsma = MonAnBUS.ReturnListMonAn();
-             for(MonAnDTO DTO : dsma){
-                 table_MonAn.addRow(DTO);
-             }  
-         } catch (Exception e) {
-             e.printStackTrace();
-         }
       
 //        table_MonAn.clear();
 //        ArrayList <MonAnDTO> dsmn = new ArrayList<MonAnDTO>();

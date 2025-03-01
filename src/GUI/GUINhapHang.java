@@ -34,7 +34,7 @@ import javax.swing.plaf.FontUIResource;
 
 public class GUINhapHang extends GUIFormBanNhap {
     // Tạo mảng tiêu đề của bảng nguyên liệu
-    private static String array_NguyenLieu[] = {"Mã nguyên liệu", "Tên", "Đơn giá", "Hình ảnh", "Loại", "Đơn vị tính", "Số lượng"};
+    private static String array_NguyenLieu[] = {"Mã nguyên liệu", "Tên", "Đơn giá", "Hình ảnh", "Đơn vị tính", "Số lượng"};
     // Tạo bảng nguyên liệu để nhân viên chọn danh sách và add lên bảng thanh toán
     private GUIMyTable table_NguyenLieu, ThanhToan;
     // Tạo Panel để show thông tin nguyên liệu và để chứa thanh tìm kiếm
@@ -42,7 +42,7 @@ public class GUINhapHang extends GUIFormBanNhap {
     // Tạo nhãn dùng để chứa hình của thông tin nguyên liệu
     private JLabel lbImage;
     // Tạo các field chứa thông tin nguyên liệu khi chọn
-    private JTextField txMaMA, txTenMA, txDonGia, txSoLuong, txLoai;
+    private JTextField txMaMA, txTenMA, txDonGia, txSoLuong;
     private JComboBox<String> cbDonViTinh;
     private String array_DonViTinh[]={"Kg","Quả","Bịch","Lít","Lon"};
     // Tạo các field chứa thông tin hóa đơn khi thanh toán
@@ -101,7 +101,6 @@ public class GUINhapHang extends GUIFormBanNhap {
                         }
                     } while (hasMa && ThanhToan.tb.getRowCount() != 0);
 
-                    txLoai.setText("");
                     txTenMA.setText("");
                     txDonGia.setText("");
                     txSoLuong.setText("");
@@ -109,7 +108,6 @@ public class GUINhapHang extends GUIFormBanNhap {
                     lbImage.setIcon(new ImageIcon());
 
                     txTenMA.setEditable(true);
-                    txLoai.setEditable(true);
                     txDonGia.setEditable(true);
                     txSoLuong.setEditable(true);
                     cbDonViTinh.setEnabled(true);
@@ -258,7 +256,6 @@ public class GUINhapHang extends GUIFormBanNhap {
         txMaMA = new JTextField();
         txTenMA = new JTextField();
         txDonGia = new JTextField();
-        txLoai = new JTextField();
         txSoLuong = new JTextField();
         if (array_DonViTinh == null)
             array_DonViTinh = new String[] { "Kg", "Quả", "Bịch" };
@@ -267,14 +264,12 @@ public class GUINhapHang extends GUIFormBanNhap {
         // border
         txMaMA.setBorder(BorderFactory.createTitledBorder("Mã nguyên liệu"));
         txTenMA.setBorder(BorderFactory.createTitledBorder("Tên nguyên liệu"));
-        txLoai.setBorder(BorderFactory.createTitledBorder("Loại"));
         txDonGia.setBorder(BorderFactory.createTitledBorder("Đơn giá"));
         txSoLuong.setBorder(BorderFactory.createTitledBorder("Số lượng"));
         cbDonViTinh.setBorder(BorderFactory.createTitledBorder("Đơn vị tính"));
         // disable
         txMaMA.setEditable(false);
         txTenMA.setEditable(false);
-        txLoai.setEditable(false);
         txDonGia.setEditable(false);
         txSoLuong.setEditable(true);
         cbDonViTinh.setEditable(false);
@@ -284,7 +279,6 @@ public class GUINhapHang extends GUIFormBanNhap {
         Font f = new Font(Font.SANS_SERIF, Font.BOLD, 15);
         txMaMA.setFont(f);
         txTenMA.setFont(f);
-        txLoai.setFont(f);
         txDonGia.setFont(f);
         txSoLuong.setFont(f);
         cbDonViTinh.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 13));
@@ -292,14 +286,12 @@ public class GUINhapHang extends GUIFormBanNhap {
 
         txMaMA.setBounds(70, 0, 200, 40);
         txTenMA.setBounds(70, 50, 200, 40);
-        txLoai.setBounds(70, 100, 200, 40);
-        txDonGia.setBounds(70, 150, 200, 40);
-        txSoLuong.setBounds(70, 200, 200, 40);
-        cbDonViTinh.setBounds(70, 250, 200, 45);
+        txDonGia.setBounds(70, 100, 200, 40);
+        txSoLuong.setBounds(70, 150, 200, 40);
+        cbDonViTinh.setBounds(70, 200, 200, 45);
         // add to panel
         ChiTiet.add(txMaMA);
         ChiTiet.add(txTenMA);
-        ChiTiet.add(txLoai);
         ChiTiet.add(txDonGia);
         ChiTiet.add(txSoLuong);
         ChiTiet.add(cbDonViTinh);
@@ -370,16 +362,17 @@ public class GUINhapHang extends GUIFormBanNhap {
 
                 // Sao chép file vào thư mục đích
                 Files.copy(sourceFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                tenAnh = filename;
+                int w = lbImage.getWidth();
+                int h = lbImage.getHeight();
+                String imagePath = "src/Images/MonAn/" + filename;
+                ImageIcon img = new ImageIcon(imagePath);
+                Image imgScaled = img.getImage().getScaledInstance(w, h, Image.SCALE_DEFAULT);
+                lbImage.setIcon(new ImageIcon(imgScaled));
             } catch (IOException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Lỗi khi sao chép ảnh!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
-            tenAnh = filename;
-            int w = lbImage.getWidth();
-            int h = lbImage.getHeight();
-            ImageIcon img = new ImageIcon(getClass().getResource("/Images/MonAn/" + filename));
-            Image imgScaled = img.getImage().getScaledInstance(w, h, Image.SCALE_DEFAULT);
-            lbImage.setIcon(new ImageIcon(imgScaled));
         }
     }
 
@@ -399,14 +392,12 @@ public class GUINhapHang extends GUIFormBanNhap {
                     // show info
                     txMaMA.setText(ds.getIDNguyenLieu());
                     txTenMA.setText(ds.getTenNguyenLieu());
-                    txLoai.setText(ds.getLoai());
                     txDonGia.setText(String.valueOf(ds.getDonGia()));
                     txSoLuong.setText("1");
                     cbDonViTinh.setSelectedItem(ds.getDonViTinh());
                     tenAnh = ds.getHinhAnh();
 
                     txTenMA.setEditable(false);
-                    txLoai.setEditable(false);
                     txDonGia.setEditable(false);
                     cbDonViTinh.setEditable(false);
                     cbDonViTinh.setEnabled(false);
@@ -508,12 +499,12 @@ public class GUINhapHang extends GUIFormBanNhap {
     protected JPanel panelThanhToan() {
         JPanel panel = new JPanel();
         ThanhToan = new GUIMyTable();
-        ThanhToan.setHeaders(new String[] { "Mã nguyên liệu", "Tên nguyên liệu", "Giá", "Loại", "Số lượng",
+        ThanhToan.setHeaders(new String[] { "Mã nguyên liệu", "Tên nguyên liệu", "Giá", "Số lượng",
                 "Đơn vị tính", "Tên hình ảnh" });
         ThanhToan.pane.setPreferredSize(new Dimension(GUImenu.width_content * 49 / 100, 300));
-        double[] tilerow = { 20, 23, 15, 12, 15, 15, 0 }; // set tỉ lệ các cột, tổng các phần tử = 100
-        ThanhToan.tb.getColumnModel().getColumn(6).setMaxWidth(0); // Ẩn cột "Tên hình ảnh"
-        ThanhToan.tb.getColumnModel().getColumn(6).setMinWidth(0);
+        double[] tilerow = { 23, 23, 18, 18, 18, 0 }; // set tỉ lệ các cột, tổng các phần tử = 100
+        ThanhToan.tb.getColumnModel().getColumn(5).setMaxWidth(0); // Ẩn cột "Tên hình ảnh"
+        ThanhToan.tb.getColumnModel().getColumn(5).setMinWidth(0);
         ThanhToan.setColumnsWidth(tilerow);
         panel.add(ThanhToan);
 
@@ -530,13 +521,8 @@ public class GUINhapHang extends GUIFormBanNhap {
             String dg = txDonGia.getText();
             if (isFirstNL) {
                 String ten = txTenMA.getText();
-                String loai = txLoai.getText();
                 if (ten.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Tên không bỏ trống");
-                    return;
-                }
-                if (loai.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Loại không bỏ trống");
                     return;
                 }
                 if (tenAnh == null) {
@@ -556,28 +542,25 @@ public class GUINhapHang extends GUIFormBanNhap {
                     return;
                 }
                 float b = Float.parseFloat(dg);
-                if (isFirstDonGia) {
-                    if (dg.isEmpty()) {
-                        JOptionPane.showMessageDialog(null, "Đơn giá không bỏ trống");
-                        return;
-                    }
-                    if (b <= 0) {
-                        JOptionPane.showMessageDialog(null, "Đơn giá phải lớn hơn 0");
-                        return;
-                    }
-                    isFirstDonGia = false;
+                if (dg.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Đơn giá không bỏ trống");
+                    return;
                 }
-                int a = Integer.parseInt(sl);
+                if (b <= 0) {
+                    JOptionPane.showMessageDialog(null, "Đơn giá phải lớn hơn 0");
+                    return;
+                }
+                float a = Float.parseFloat(sl);
                 if (a <= 0) {
                     JOptionPane.showMessageDialog(null, "Số lượng phải lớn hơn 0");
                     return;
                 } else {
                     for (int j = 0; j < ThanhToan.tbModel.getRowCount(); j++) {
                         if (ThanhToan.tbModel.getValueAt(j, 0).equals(txMaMA.getText())) {
-                            int SlTrongThanhToan = a
-                                    + Integer.valueOf(String.valueOf(ThanhToan.tbModel.getValueAt(j, 4)));
+                            float SlTrongThanhToan = a
+                                    + Float.parseFloat(String.valueOf(ThanhToan.tbModel.getValueAt(j, 3)));
 
-                            ThanhToan.tbModel.setValueAt(SlTrongThanhToan, j, 4);
+                            ThanhToan.tbModel.setValueAt(SlTrongThanhToan, j, 3);
                             TinhTien();
                             return;
 
@@ -587,7 +570,6 @@ public class GUINhapHang extends GUIFormBanNhap {
                             String.valueOf(txMaMA.getText()),
                             String.valueOf(txTenMA.getText()),
                             String.valueOf(b),
-                            String.valueOf(txLoai.getText()),
                             // String.valueOf(table_NguyenLieu.tbModel.getValueAt(i, 4)),
                             String.valueOf(a),
                             String.valueOf(cbDonViTinh.getSelectedItem().toString()),
@@ -598,7 +580,7 @@ public class GUINhapHang extends GUIFormBanNhap {
                 }
             }
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "Lỗi định dạng");
+            JOptionPane.showMessageDialog(null, "Lỗi định dạng a");
         }
     }
 
@@ -689,16 +671,15 @@ public class GUINhapHang extends GUIFormBanNhap {
                             nlBUS.them(new NguyenLieuDTO(
                                     ThanhToan.tbModel.getValueAt(i, 0).toString(),
                                     ThanhToan.tbModel.getValueAt(i, 1).toString(),
-                                    ThanhToan.tbModel.getValueAt(i, 5).toString(),
+                                    ThanhToan.tbModel.getValueAt(i, 4).toString(),
                                     price,
-                                    ThanhToan.tbModel.getValueAt(i, 6).toString(),
-                                    ThanhToan.tbModel.getValueAt(i, 3).toString(),
-                                    Float.parseFloat(ThanhToan.tbModel.getValueAt(i, 4).toString()),
+                                    ThanhToan.tbModel.getValueAt(i, 5).toString(),
+                                    Float.parseFloat(ThanhToan.tbModel.getValueAt(i, 3).toString()),
                                     "Hiện"));
                         }
                     }
                     String manguyenlieu = String.valueOf(ThanhToan.tbModel.getValueAt(i, 0));
-                    float soluong = Float.parseFloat(String.valueOf(ThanhToan.tbModel.getValueAt(i, 4)));
+                    float soluong = Float.parseFloat(String.valueOf(ThanhToan.tbModel.getValueAt(i, 3)));
                     float dongia = Float.valueOf(String.valueOf(ThanhToan.tbModel.getValueAt(i, 2)));
                     float thanhtien = dongia * soluong;
                     // Tạo DTO và truyền dữ liệu trực tiếp thông qua constructor
@@ -716,6 +697,8 @@ public class GUINhapHang extends GUIFormBanNhap {
                 TongTien.setText("0");
                 ThanhToan.clear();
                 LamMoi();
+            } catch (NumberFormatException ne) {
+                JOptionPane.showMessageDialog(null, "Lỗi định dạng");
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Lỗi đọc dữ liệu");
             }
@@ -748,8 +731,8 @@ public class GUINhapHang extends GUIFormBanNhap {
             float thanhtien = 0;
             for (int i = 0; i < ThanhToan.tb.getRowCount(); i++) {
 
-                int soluong = Integer.parseInt(String.valueOf(ThanhToan.tbModel.getValueAt(i, 4)));
-                float dongia = Float.valueOf(String.valueOf(ThanhToan.tbModel.getValueAt(i, 2)));
+                float soluong = Float.parseFloat(String.valueOf(ThanhToan.tbModel.getValueAt(i, 3)));
+                float dongia = Float.parseFloat(String.valueOf(ThanhToan.tbModel.getValueAt(i, 2)));
                 thanhtien += dongia * soluong;
 
             }

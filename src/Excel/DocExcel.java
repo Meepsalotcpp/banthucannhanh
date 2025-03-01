@@ -207,18 +207,17 @@ public class DocExcel {
                                 nguyenlieuOld.getDonViTinh(),
                                 String.valueOf(nguyenlieuOld.getDonGia()),
                                 nguyenlieuOld.getHinhAnh(),
-                                nguyenlieuOld.getLoai(),
                                 String.valueOf(nguyenlieuOld.getSoLuong())
                             });
                             mtb.addRow(new String[]{
-                                "Mới:", id, tennguyenlieu, donvitinh, String.valueOf(dongia), hinhanh, loai, String.valueOf(soluong)                            
+                                "Mới:", id, tennguyenlieu, donvitinh, String.valueOf(dongia), hinhanh, String.valueOf(soluong)                            
                             });
 
                             MyJOptionPane mop = new MyJOptionPane(mtb, hanhDongKhiTrung);
                             hanhDongKhiTrung = mop.getAnswer();
                         }
                         if (hanhDongKhiTrung.contains("Ghi đè")) {
-                            NguyenLieuDTO DTO=new NguyenLieuDTO(id, tennguyenlieu, donvitinh, dongia, hinhanh, loai, soluong, "Hiện");
+                            NguyenLieuDTO DTO=new NguyenLieuDTO(id, tennguyenlieu, donvitinh, dongia, hinhanh, soluong, "Hiện");
                             nguyenlieuBUS.sua(DTO,NguyenLieuBUS.timViTri(id));
                             countGhiDe++;
                         } else {
@@ -228,7 +227,7 @@ public class DocExcel {
                     //Khi database trống    
                      
                     } else {          
-                        NguyenLieuDTO nguyenlieu = new NguyenLieuDTO(id, tennguyenlieu, donvitinh, dongia, hinhanh, loai, soluong, "Hiện");
+                        NguyenLieuDTO nguyenlieu = new NguyenLieuDTO(id, tennguyenlieu, donvitinh, dongia, hinhanh, soluong, "Hiện");
                         nguyenlieuBUS.them(nguyenlieu);
                         countThem++;
                     }

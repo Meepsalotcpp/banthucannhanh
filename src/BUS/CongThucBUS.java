@@ -27,8 +27,8 @@ public class CongThucBUS {
         CongThucDAO ct = new CongThucDAO();
         if (CT == null) {
             CT = new ArrayList<>();
-            CT = ct.docCT(); // đọc dữ liệu từ database
         }
+        CT = ct.docCT(); // đọc dữ liệu từ database
         
 
     }

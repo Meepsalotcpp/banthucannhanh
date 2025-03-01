@@ -31,7 +31,6 @@ public class NguyenLieuDAO {
                     nl.setTenNguyenLieu(result.getString("TenNguyenLieu"));
                     nl.setDonGia(result.getFloat("DonGia"));
                     nl.setHinhAnh(result.getString("HinhAnh"));
-                    nl.setLoai(result.getString("Loai"));
                     nl.setDonViTinh(result.getString("DonViTinh"));
                     nl.setSoLuong(result.getFloat("SoLuong"));
                     nl.setTrangThai(result.getString("TrangThai"));
@@ -46,12 +45,11 @@ public class NguyenLieuDAO {
 
     public void them(NguyenLieuDTO nl) { // cần ghi lại khi qua class khác
         try {
-            String qry = "INSERT INTO nguyenlieu (IDNguyenLieu, TenNguyenLieu, DonGia, HinhAnh, Loai, DonViTinh, SoLuong, TrangThai) values (";
+            String qry = "INSERT INTO nguyenlieu (IDNguyenLieu, TenNguyenLieu, DonGia, HinhAnh, DonViTinh, SoLuong, TrangThai) values (";
             qry = qry + "'" + nl.getIDNguyenLieu() + "'";
             qry = qry + "," + "'" + nl.getTenNguyenLieu() + "'";
             qry = qry + "," + "'" + nl.getDonGia() + "'";
             qry = qry + "," + "'" + nl.getHinhAnh() + "'";
-            qry = qry + "," + "'" + nl.getLoai() + "'";
             qry = qry + "," + "'" + nl.getDonViTinh() + "'";
             qry = qry + "," + "'" + nl.getSoLuong() + "'";
             qry = qry + "," + "'" + nl.getTrangThai() + "'";
@@ -98,7 +96,6 @@ public class NguyenLieuDAO {
             qry = qry + "TenNguyenLieu=" + "'" + nl.getTenNguyenLieu() + "'";
             qry = qry + ",DonGia=" + "'" + nl.getDonGia() + "'";
             qry = qry + ",HinhAnh=" + "'" + nl.getHinhAnh() + "'";
-            qry = qry + ",Loai=" + "'" + nl.getLoai() + "'";
             qry = qry + ",DonViTinh=" + "'" + nl.getDonViTinh() + "'";
             qry = qry + ",SoLuong=" + "'" + nl.getSoLuong() + "'";
             qry = qry + " " + "where IDNguyenLieu='" + nl.getIDNguyenLieu() + "'";

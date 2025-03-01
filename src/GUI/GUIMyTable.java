@@ -123,7 +123,6 @@ public class GUIMyTable extends JPanel {
                     data.getTenNguyenLieu(),                   
                     String.valueOf(data.getDonGia()),
                     data.getHinhAnh(),
-                    data.getLoai(),
                     data.getDonViTinh(),
                     String.valueOf(data.getSoLuong())
                 });

@@ -2,6 +2,8 @@ package BUS;
 import DTO.*;
 import DAO.*;
 import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
 // copy paste qua hết
 public class MonAnBUS {
 
@@ -57,6 +59,19 @@ public class MonAnBUS {
         DTO.setTrangThai("Ẩn");
         if(dsMonAn!=null)
             dsMonAn.set(index, DTO);
+        CongThucBUS ctBUS = new CongThucBUS();
+        try{
+            ctBUS.docCT();
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Lỗi đọc dữ liệu");
+        }
+        for(CongThucDTO ctDTO: ctBUS.CT){
+            if(ctDTO.getIDMonAn().equals(ID)){
+                ctBUS.xoa(ctDTO.getIDCongThuc(),timViTri(ctDTO.getIDCongThuc()));
+                break;
+            }
+        }
+        
     }
     //tìm vị trí của thằng có chứa mã mà mình cần
     public static int timViTri(String ID) 

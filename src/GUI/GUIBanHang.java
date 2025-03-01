@@ -472,7 +472,7 @@ public class GUIBanHang extends GUIFormBanNhap {
                         if(TienTra.getText() != null && !TienTra.getText().isEmpty()){
                             tongTien = Float.parseFloat(String.valueOf(TongTien.getText()));
                             tienTra = Float.parseFloat(String.valueOf(TienTra.getText()));
-                            TienThoi.setText(String.valueOf(tienTra - tongTien));
+                            TienThoi.setText(String.format("%.1f",tienTra - tongTien));
                         }
                         else return;
                     }
@@ -667,6 +667,7 @@ public class GUIBanHang extends GUIFormBanNhap {
                 NgayLap.getText(),
                 NhanVien.getText(),
                 ThanhToan.tb.getRowCount(),
+                TienTra.getText(),
                 TienThoi.getText()
             )) {
                     if (KhuyenMai.getText().equals(""))
@@ -740,7 +741,7 @@ public class GUIBanHang extends GUIFormBanNhap {
     // Ràng buộc dữ liệu
     // Thứ tự truyền vào lần lượt trùng với các thứ tự ô text
     public boolean checkText(String checkMaHD, String checkTien, String checkMaKH, String checkNgay, String checkMaNV,
-             int somonan, String checkTienTra) {
+             int somonan, String checkTienTra, String checkTienThoi) {
         UIManager.put("OptionPane.messageFont", new FontUIResource(new Font("Segoe UI", 0, 20)));
         if (checkMaHD.equals("")
                 || checkTien.equals("")
@@ -748,11 +749,12 @@ public class GUIBanHang extends GUIFormBanNhap {
                 || checkNgay.equals("")
                 || checkMaNV.equals("")
                 || checkTienTra.equals("")
+                || checkTienThoi.equals("")
                 ) {
             JOptionPane.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
         } else if (somonan == 0) {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn món ăn");
-        } else if (Float.parseFloat(checkTienTra) < 0) {
+        } else if (Float.parseFloat(checkTienThoi) < 0) {
             JOptionPane.showMessageDialog(null, "Tiền trả không đủ");
         } else {
             return true;
@@ -796,7 +798,7 @@ public class GUIBanHang extends GUIFormBanNhap {
         // for (int j = 0; j < dsmn.size(); j++) {
         // System.out.println(dsmn.get(j).getTrangThai());
         // }
-
+        
         for (MonAnDTO DTO : MonAnBUS.dsMonAn) {
             if (DTO.getTrangThai().equals("Hiện")) {
                 table_MonAn.addRow(DTO);
