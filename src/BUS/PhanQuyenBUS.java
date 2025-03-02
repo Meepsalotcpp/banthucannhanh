@@ -6,6 +6,7 @@
 package BUS;
 
 import DAO.PhanQuyenDAO;
+import DTO.NhaCungCapDTO;
 import DTO.PhanQuyenDTO;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -146,6 +147,24 @@ public class PhanQuyenBUS {
             i++;
         }
         return s;
+    }
+
+    public static boolean isNameUsed(String name) {
+        for (PhanQuyenDTO pq : dspq) {
+            if (pq.getTenQuyen().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isNameUsed(String name, String id) {
+        for (PhanQuyenDTO pq : dspq) {
+            if (pq.getTenQuyen().equals(name) && !pq.getIDPhanQuyen().equals(id)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 

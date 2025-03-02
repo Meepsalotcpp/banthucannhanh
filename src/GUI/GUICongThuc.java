@@ -850,7 +850,16 @@ public class GUICongThuc extends GUIFormContent{
     //Hàm khi ấn nút làm mới
     private void LamMoi(){
         table_CongThuc.clear();
-        docDB();
+        try{
+            BUS.docCT();
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Lỗi đọc dữ liệu");
+        }
+        for (CongThucDTO DTO : BUS.CT) {
+             if (DTO.getTrangThai().equals("Hiện")) {
+                 table_CongThuc.addRow(DTO);
+                }
+        }
     }
     @Override
     protected JPanel TimKiem(){

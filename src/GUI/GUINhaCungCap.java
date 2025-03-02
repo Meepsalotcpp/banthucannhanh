@@ -6,6 +6,7 @@
 package GUI;
 
 import BUS.NhaCungCapBUS;
+import BUS.NhanVienBUS;
 import BUS.Tool;
 import DAO.NhaCungCapDAO;
 import DTO.NhaCungCapDTO;
@@ -245,7 +246,8 @@ public class GUINhaCungCap extends GUIFormContent {
                 cohieu = 1;
                 int a = JOptionPane.showConfirmDialog(Sua, "Bạn chắc chứ ?", "", JOptionPane.YES_NO_OPTION);
                 if (a == JOptionPane.YES_OPTION) {
-                    if(checkTextSua(txt_NhaCungCap_Sua[1].getText(), 
+                    if(checkTextSua(txt_NhaCungCap_Sua[0].getText(), 
+                            txt_NhaCungCap_Sua[1].getText(),
                             txt_NhaCungCap_Sua[2].getText(),
                             txt_NhaCungCap_Sua[3].getText(),
                             txt_NhaCungCap_Sua[4].getText()))
@@ -494,16 +496,13 @@ public class GUINhaCungCap extends GUIFormContent {
         return false;
     }
 
-    public boolean checkTextSua(String tenNhaCungCap, String soDienThoai, String gmail, String diaChi) {
+    public boolean checkTextSua(String id, String tenNhaCungCap, String soDienThoai, String gmail, String diaChi) {
         UIManager.put("OptionPane.messageFont", new FontUIResource(new Font("Segoe UI", 0, 20)));
         if (tenNhaCungCap.equals("")
                 || soDienThoai.equals("")
                 || gmail.equals("")
                 || diaChi.equals("")) {
             JOptionPane.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
-        } else if (!Tool.isName(Tool.removeAccent(tenNhaCungCap))) {
-            JOptionPane.showMessageDialog(null, "Tên nhà cung cấp không được chứa ký tự đặc biệt");
-            txt_NhaCungCap_Sua[1].requestFocus();
         } else if (!Tool.isLength50(tenNhaCungCap)) {
             JOptionPane.showMessageDialog(null, "Tên nhà cung cấp không được quá 50 ký tự");
             txt_NhaCungCap_Sua[1].requestFocus();
@@ -516,8 +515,14 @@ public class GUINhaCungCap extends GUIFormContent {
         } else if (!Tool.isPhoneNumber(soDienThoai)) {
             JOptionPane.showMessageDialog(null, "Số điện thoại không chính xác");
             txt_NhaCungCap_Sua[2].requestFocus();
+        } else if (NhaCungCapBUS.isPhoneNumberUsed(soDienThoai,id)) {
+            JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại");
+            txt_NhaCungCap_Sua[3].requestFocus();
         } else if (!Tool.isGmail(gmail)) {
             JOptionPane.showMessageDialog(null, "Gmail phải đúng định dạng và không được chứa ký tự đặc biệt ");
+            txt_NhaCungCap_Sua[3].requestFocus();
+        } else if (NhaCungCapBUS.isMailUsed(gmail,id)) {
+            JOptionPane.showMessageDialog(null, "Gmail đã được sử dụng");
             txt_NhaCungCap_Sua[3].requestFocus();
         } else if (!Tool.isName(Tool.removeAccent(diaChi))) {
             JOptionPane.showMessageDialog(null, "Địa chỉ không được chứa ký tự đặc biệt");

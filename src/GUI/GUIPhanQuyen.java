@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import BUS.KhachHangBUS;
 import BUS.PhanQuyenBUS;
 import BUS.Tool;
 import BUS.TaiKhoanBUS;
@@ -270,7 +271,7 @@ public class GUIPhanQuyen extends GUIFormContent{
                 int a=JOptionPane.showConfirmDialog( Sua,"Bạn chắc chứ ?" ,"",JOptionPane.YES_NO_OPTION);
                 if(a==JOptionPane.YES_OPTION)
                 {
-                    if(checkTextSua(txt_PhanQuyen_Sua[1].getText()))
+                    if(checkTextSua(txt_PhanQuyen_Sua[0].getText(),txt_PhanQuyen_Sua[1].getText()))
                     {
                         //Chạy hàm để lưu lại việc sửa dữ liệu    
                     buttonLuu_Sua();
@@ -524,6 +525,9 @@ public class GUIPhanQuyen extends GUIFormContent{
         UIManager.put("OptionPane.messageFont", new FontUIResource(new Font("Segoe UI", 0, 20)));
         if (tenQuyen.equals("")) {
             JOptionPane.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
+        } else if (PhanQuyenBUS.isNameUsed(tenQuyen)) {
+            JOptionPane.showMessageDialog(null, "Tên quyền đã tồn tại");
+            txt_PhanQuyen_Them[1].requestFocus();
         }else if(!checkCoChonQuyen())
         {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn ít nhất một quyền");
@@ -543,7 +547,7 @@ public class GUIPhanQuyen extends GUIFormContent{
         return false;
     }
     
-    public boolean checkTextSua(String tenQuyen) {
+    public boolean checkTextSua(String id, String tenQuyen) {
         UIManager.put("OptionPane.messageFont", new FontUIResource(new Font("Segoe UI", 0, 20)));
         if (tenQuyen.equals("")) {
             JOptionPane.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
@@ -558,6 +562,10 @@ public class GUIPhanQuyen extends GUIFormContent{
         else if (!Tool.isLength50(tenQuyen)) {
             JOptionPane.showMessageDialog(null, "Tên quyền không được quá 50 ký tự");
             txt_PhanQuyen_Sua[1].requestFocus();
+        }
+        else if (PhanQuyenBUS.isNameUsed(tenQuyen,id)) {
+        JOptionPane.showMessageDialog(null, "Tên quyền đã tồn tại");
+        txt_PhanQuyen_Sua[1].requestFocus();
         }
          else {
             return true;

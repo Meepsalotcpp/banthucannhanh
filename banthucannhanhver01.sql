@@ -382,16 +382,16 @@ CREATE TABLE `khachhang` (
 INSERT INTO `khachhang` (`IDKhachHang`, `HoKhachHang`, `TenKhachHang`, `SoDienThoai`, `TongChiTieu`, `TrangThai`) VALUES
 ('KH01', 'Lê', 'Lợi', '0985444326', 200000, 'Hiện'),
 ('KH02', 'Phan Bội', 'A', '0903121212', 5000000, 'Hiện'),
-('KH03', 'Lê Văn', 'Long', '0323232323', 1000000, 'Hiện'),
+('KH03', 'Lê Văn', 'Long', '0823232323', 1000000, 'Hiện'),
 ('KH04', 'Nguyễn Thị', 'A', '0902030401', 690000, 'Hiện'),
-('KH05', 'Noor A Kim', 'Lam', '0377010101', 60000, 'Hiện'),
-('KH06', 'Nguyễn Minh Phương', 'Nam', '0367010101', 0, 'Hiện'),
-('KH07', 'Nguyễn Hữu', 'Nhân', '0367010102', 0, 'Hiện'),
-('KH08', 'Đặng Thị Kiều', 'Oanh', '0367017105', 0, 'Hiện'),
-('KH09', 'Nguyễn Thị Ngọc', 'Giàu', '0367010324', 0, 'Hiện'),
-('KH10', 'Đặng Cao Phúc', 'Hòa', '0367010132', 80000, 'Hiện'),
-('KH11', 'Trần Ngọc Huy', 'Hoàng', '0377018963', 0, 'Hiện'),
-('KH12', 'Nguyễn Mai Kim ', 'Ngân', '0377075320', 0, 'Hiện');
+('KH05', 'Noor A Kim', 'Lam', '0677010101', 60000, 'Hiện'),
+('KH06', 'Nguyễn Minh Phương', 'Nam', '0867010101', 0, 'Hiện'),
+('KH07', 'Nguyễn Hữu', 'Nhân', '0967010102', 0, 'Hiện'),
+('KH08', 'Đặng Thị Kiều', 'Oanh', '0967017105', 0, 'Hiện'),
+('KH09', 'Nguyễn Thị Ngọc', 'Giàu', '0867010324', 0, 'Hiện'),
+('KH10', 'Đặng Cao Phúc', 'Hòa', '0767010132', 80000, 'Hiện'),
+('KH11', 'Trần Ngọc Huy', 'Hoàng', '0677018963', 0, 'Hiện'),
+('KH12', 'Nguyễn Mai Kim ', 'Ngân', '0977075320', 0, 'Hiện');
 
 -- --------------------------------------------------------
 
@@ -561,14 +561,14 @@ CREATE TABLE `nhacungcap` (
 --
 
 INSERT INTO `nhacungcap` (`IDNhaCungCap`, `TenNhaCungCap`, `SoDienThoai`, `Gmail`, `DiaChi`, `TrangThai`) VALUES
-('NCC01', 'Circle K', '0923515615', 'Circle_K@gmail.com', 'a', 'Hiện'),
-('NCC02', 'GS25', '0351565488', 'GS25@gmail.com', 'a', 'Hiện'),
-('NCC03', 'FamilyMart', '0365166515', 'FamilyMart@gmail.com', 'a', 'Hiện'),
-('NCC04', '7- Eleven', '0316155649', '7- Eleven@gmail.com', 'a', 'Hiện'),
-('NCC05', 'Ministop', '0321564168', 'Ministop@gmail.com', 'a', 'Hiện'),
+('NCC01', 'Circle K', '0923515615', 'CircleK@gmail.com', 'a', 'Hiện'),
+('NCC02', 'GS25', '0851565488', 'GS25@gmail.com', 'a', 'Hiện'),
+('NCC03', 'FamilyMart', '0765166515', 'FamilyMart@gmail.com', 'a', 'Hiện'),
+('NCC04', '7- Eleven', '0916155649', '7Eleven@gmail.com', 'a', 'Hiện'),
+('NCC05', 'Ministop', '0821564168', 'Ministop@gmail.com', 'a', 'Hiện'),
 ('NCC06', 'Cheers', '0935165165', 'Cheers@gmail.com', 'a', 'Hiện'),
-('NCC07', 'Co.op Smile', '0916544845', 'Co.opSmile@gmail.com', 'a', 'Hiện'),
-('NCC08', 'Speed L', '0351515684', 'SpeedL@gmail.com', 'a', 'Hiện');
+('NCC07', 'Co.op Smile', '0916544845', 'CoopSmile@gmail.com', 'a', 'Hiện'),
+('NCC08', 'Speed L', '0851515684', 'SpeedL@gmail.com', 'a', 'Hiện');
 
 -- --------------------------------------------------------
 
@@ -595,7 +595,7 @@ INSERT INTO `nhanvien` (`IDNhanVien`, `HoNhanVien`, `TenNhanVien`, `Gmail`, `Gio
 ('NV01', 'Nguyễn Văn', 'Đốc', 'docnguyen@gmail.com', 'Nam', '0987654321', 'Quản lý', 'Hiện'),
 ('NV02', 'Trần Văn', 'Bảo', 'baotran@gmail.com', 'Nam', '0945897412', 'Bán hàng', 'Hiện'),
 ('NV03', 'Lý Thị', 'Thơ', 'tholy@gmail.com', 'Nam', '0888454321', 'Nhập hàng', 'Hiện'),
-('NV04', 'Lê Thị Kim', 'Dung', 'dungle@gmail.com', 'Nam', '0987654321', 'admin', 'Hiện');
+('NV04', 'Lê Thị Kim', 'Dung', 'dungle@gmail.com', 'Nam', '0987654322', 'Admin', 'Hiện');
 
 -- --------------------------------------------------------
 

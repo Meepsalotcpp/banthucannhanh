@@ -259,7 +259,6 @@ public class GUITaiKhoan extends GUIFormContent {
                     btnChonQuyen(txt_TaiKhoan_Sua[2]);
                 });
                 suaPhanQuyen.setBounds(355, y, 30, 30);
-                Sua.add(suaPhanQuyen);
             }
             y += 40;
             Sua.add(txt_TaiKhoan_Sua[i]);

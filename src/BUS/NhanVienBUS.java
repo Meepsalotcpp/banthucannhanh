@@ -142,6 +142,24 @@ public class NhanVienBUS {
         }
         return false;
     }
+
+    public static boolean isPhoneNumberUsed (String phoneNumber, String id) {
+        for (NhanVienDTO nv : dsnv) {
+            if (nv.getSoDienThoai().equals(phoneNumber) && !nv.getIDNhanVien().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isMailUsed (String mail, String id) {
+        for (NhanVienDTO nv : dsnv) {
+            if (nv.getGmail().equals(mail) && !nv.getIDNhanVien().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 

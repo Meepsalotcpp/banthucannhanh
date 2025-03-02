@@ -6,6 +6,7 @@
 package GUI;
 
 import BUS.KhachHangBUS;
+import BUS.NhaCungCapBUS;
 import BUS.Tool;
 import DTO.KhachHangDTO;
 import Excel.DocExcel;
@@ -92,12 +93,13 @@ public class GUIKhachHang extends GUIFormContent {
         Xoa.setBorder(BorderFactory.createLineBorder(Color.decode("#90CAF9"), 1));
         Xoa.setBackground(Color.decode("#90CAF9"));
         Xoa.setBounds(510, 0, 70, 30);
-        Xoa.addMouseListener(new MouseAdapter(){
-            @Override
-            public void mousePressed(MouseEvent evt){
-                Xoa_click(evt);
-            }
-        });
+        Xoa.setEnabled(false);
+        // Xoa.addMouseListener(new MouseAdapter(){
+        //     @Override
+        //     public void mousePressed(MouseEvent evt){
+        //         Xoa_click(evt);
+        //     }
+        // });
         CongCu.add(Xoa);
         //Nút nhập excel
         JButton NhapExcel=new JButton("Nhập Excel");
@@ -311,7 +313,8 @@ public class GUIKhachHang extends GUIFormContent {
                 cohieu =1;
                 int a = JOptionPane.showConfirmDialog(Sua, "Bạn chắc chứ ?", "", JOptionPane.YES_NO_OPTION);
                 if (a == JOptionPane.YES_OPTION) {
-                    if(checkTextSua(txt_KhachHang_Sua[1].getText(),
+                    if(checkTextSua(txt_KhachHang_Sua[0].getText(),
+                            txt_KhachHang_Sua[1].getText(),
                             txt_KhachHang_Sua[2].getText(),
                             txt_KhachHang_Sua[3].getText(),
                             txt_KhachHang_Sua[4].getText()))
@@ -486,7 +489,7 @@ JPanel TimKiem=new JPanel(null);
         JLabel lbTen=new JLabel("");
         lbTen.setBorder(new TitledBorder("Tìm kiếm"));
         int x=200;
-        cbSearch = new JComboBox<>(new String[]{"Mã khách hàng","Họ","Tên","Gmail","Giới tính","SĐT"});
+        cbSearch = new JComboBox<>(new String[]{"Mã khách hàng","Họ","Tên","SĐT"});
         cbSearch.setBounds(5, 20, 100, 40);
         lbTen.add(cbSearch);
         
@@ -674,7 +677,7 @@ JPanel TimKiem=new JPanel(null);
         return false;
     }
     
-    public boolean checkTextSua(String hoKhachHang, String tenKhachHang, String soDienThoai, String tongChiTieu) {
+    public boolean checkTextSua(String id, String hoKhachHang, String tenKhachHang, String soDienThoai, String tongChiTieu) {
         UIManager.put("OptionPane.messageFont", new FontUIResource(new Font("Segoe UI", 0, 20)));
         if (hoKhachHang.equals("")
                 || tenKhachHang.equals("")
@@ -704,6 +707,9 @@ JPanel TimKiem=new JPanel(null);
             txt_KhachHang_Sua[3].requestFocus();
         } else if (!Tool.isPhoneNumber(soDienThoai)) {
             JOptionPane.showMessageDialog(null, "Số điện thoại không chính xác");
+            txt_KhachHang_Sua[3].requestFocus();
+        } else if (KhachHangBUS.isPhoneNumberUsed(soDienThoai, id)) {
+            JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại");
             txt_KhachHang_Sua[3].requestFocus();
         } else if (!Tool.isTongTien(Tool.removeAccent(tongChiTieu))) {
             JOptionPane.showMessageDialog(null, "Tổng chi tiêu không được chứa ký tự đặc biệt");

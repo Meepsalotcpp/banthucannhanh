@@ -147,6 +147,29 @@ public class GUIBanHang extends GUIFormBanNhap {
 
         lbsearch.setBounds(200, 0, 215, 70);
         TimKiem.add(lbsearch);
+
+        JButton LamMoi = new JButton("Làm mới");
+        LamMoi.setIcon(new ImageIcon(this.getClass().getResource("/Images/Icon/lammoi1-30.png")));
+        LamMoi.setFont(new Font("Segoe UI", 0, 14));
+        LamMoi.setBorder(BorderFactory.createLineBorder(Color.decode("#BDBDBD"), 1));
+        LamMoi.setBackground(Color.decode("#90CAF9"));
+        LamMoi.setBounds(450, 10, 110, 30);
+        LamMoi.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent evt) {
+                //clear hết các text tìm kiếm
+                search.setText("");
+                //gọi hàm làm mới
+                try {
+                    LamMoi();
+                } catch (Exception e) {
+                    //TODO: handle exception
+                }
+            }
+
+        });
+        TimKiem.add(LamMoi);
+
         return TimKiem;
     }
 
@@ -793,16 +816,16 @@ public class GUIBanHang extends GUIFormBanNhap {
     // Hàm khi ấn nút làm mới
     private void LamMoi() throws SQLException, Exception {
         table_MonAn.clear();
-        // ArrayList <MonAnDTO> dsmn = new ArrayList<MonAnDTO>();
-        // dsmn = MonAnDAO.docDB();
-        // for (int j = 0; j < dsmn.size(); j++) {
-        // System.out.println(dsmn.get(j).getTrangThai());
-        // }
-        
-        for (MonAnDTO DTO : MonAnBUS.dsMonAn) {
-            if (DTO.getTrangThai().equals("Hiện")) {
-                table_MonAn.addRow(DTO);
-            }
+        MonAnBUS BUS = new MonAnBUS();
+        try{
+            BUS.docDSMonAn();
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Lỗi đọc dữ liệu");
+        }
+        for (MonAnDTO DTO : BUS.dsMonAn) {
+             if (DTO.getTrangThai().equals("Hiện")) {
+                 table_MonAn.addRow(DTO);
+                }
         }
     }
 

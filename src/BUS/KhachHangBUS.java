@@ -8,6 +8,8 @@ package BUS;
 import DAO.KhachHangDAO;
 import java.util.ArrayList;
 import DTO.KhachHangDTO;
+import DTO.NhaCungCapDTO;
+
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -143,6 +145,15 @@ public class KhachHangBUS {
         catch (SQLException ex) {
            Logger.getLogger(KhachHangBUS.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public static boolean isPhoneNumberUsed(String phone, String id) {
+        for (KhachHangDTO kh : dskh) {
+            if (kh.getSoDienThoai().equals(phone) && !kh.getIDKhachHang().equals(id)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 

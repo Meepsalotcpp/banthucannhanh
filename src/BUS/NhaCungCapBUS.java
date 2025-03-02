@@ -125,4 +125,20 @@ public class NhaCungCapBUS {
         }
         return false;
     }
+    public static boolean isPhoneNumberUsed(String phone, String id) {
+        for (NhaCungCapDTO ncc : dsncc) {
+            if (ncc.getSoDienThoai().equals(phone) && !ncc.getIDNhaCungCap().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public static boolean isMailUsed(String mail, String id) {
+        for (NhaCungCapDTO ncc : dsncc) {
+            if (ncc.getGmail().equals(mail) && !ncc.getIDNhaCungCap().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

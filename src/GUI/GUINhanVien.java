@@ -316,7 +316,8 @@ public class GUINhanVien extends GUIFormContent {
                 cohieu = 1;
                 int a = JOptionPane.showConfirmDialog(Sua, "Bạn chắc chứ ?", "", JOptionPane.YES_NO_OPTION);
                 if (a == JOptionPane.YES_OPTION) {
-                    if (checkTextSua(txt_NhanVien_Sua[1].getText(),
+                    if (checkTextSua(txt_NhanVien_Sua[0].getText(),
+                            txt_NhanVien_Sua[1].getText(),
                             txt_NhanVien_Sua[2].getText(),
                             txt_NhanVien_Sua[3].getText(),
                             cbGioiTinh_Sua.getSelectedItem().toString(),
@@ -665,7 +666,7 @@ public class GUINhanVien extends GUIFormContent {
         return false;
     }
 
-    public boolean checkTextSua(String hoNhanVien, String tenNhanVien, String gmail, String gioiTinh, String soDienThoai, String chucVu) {
+    public boolean checkTextSua(String id, String hoNhanVien, String tenNhanVien, String gmail, String gioiTinh, String soDienThoai, String chucVu) {
         UIManager.put("OptionPane.messageFont", new FontUIResource(new Font("Segoe UI", 0, 20)));
         if (hoNhanVien.equals("")
                 || tenNhanVien.equals("")
@@ -692,7 +693,7 @@ public class GUINhanVien extends GUIFormContent {
         } else if (!Tool.isGmail(gmail)) {
             JOptionPane.showMessageDialog(null, "Gmail phải đúng định dạng và không được chứa ký tự đặc biệt ");
             txt_NhanVien_Sua[3].requestFocus();
-        } else if (NhanVienBUS.isMailUsed(gmail)) {
+        } else if (NhanVienBUS.isMailUsed(gmail,id)) {
             JOptionPane.showMessageDialog(null, "Gmail đã được sử dụng");
             txt_NhanVien_Sua[3].requestFocus();
         } else if (!Tool.isName(Tool.removeAccent(gioiTinh))) {
@@ -710,9 +711,9 @@ public class GUINhanVien extends GUIFormContent {
         } else if (!Tool.isPhoneNumber(soDienThoai)) {
             JOptionPane.showMessageDialog(null, "Số điện thoại không chính xác");
             txt_NhanVien_Sua[5].requestFocus();
-        } else if (NhanVienBUS.isPhoneNumberUsed(soDienThoai)) {
+        } else if (NhanVienBUS.isPhoneNumberUsed(soDienThoai,id)) {
             JOptionPane.showMessageDialog(null, "Số điện thoại đã được sử dụng");
-            txt_NhanVien_Them[3].requestFocus();
+            txt_NhanVien_Sua[3].requestFocus();
         } else if (!Tool.isName(Tool.removeAccent(chucVu))) {
             JOptionPane.showMessageDialog(null, "Chức vụ không được chứa ký tự đặc biệt");
             txt_NhanVien_Sua[6].requestFocus();
