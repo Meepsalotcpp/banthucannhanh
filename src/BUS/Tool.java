@@ -389,6 +389,23 @@ public class Tool {
                     result.add(CongThucDTO);
                 }
             });
+        if (type.equals("Tên món ăn")){
+            // Tìm theo tên
+            MonAnBUS ma = new MonAnBUS();
+            try {
+                ma.docDSMonAn();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Lỗi đọc dữ liệu");
+            }
+            CongThucBUS.CT.forEach((CongThucDTO) -> {
+                String tenMA = ma.getMonAnDTO(CongThucDTO.getIDMonAn()).getTenMonAn().toLowerCase();
+                if (tenMA.contains(value.toLowerCase())
+                        && CongThucDTO.getTrangThai().equals("Hiện")) // Tìm kiếm theo chuỗi thường
+                {
+                    result.add(CongThucDTO);
+                }
+            });
+        }
         if (type.equals("Mô tả công thức"))
             // Tìm theo tên
             CongThucBUS.CT.forEach((CongThucDTO) -> {
@@ -941,20 +958,33 @@ public class Tool {
                 }
             });
         }
-        if (type.equals("Mã nhân viên")) {
+        if (type.equals("Tên nhân viên")) {
             // duyệt xem mã giống mã nhập vào thì thêm vào arraylist result
+            NhanVienBUS nvBUS = new NhanVienBUS();
+            try {
+                nvBUS.docDSNV();
+            } catch (Exception ex) {
+            }
             HoaDonNhapBUS.dshdn.forEach((HoaDonNhapDTO) -> {
-                if (HoaDonNhapDTO.getIDNhanVien().toLowerCase().contains(value.toLowerCase())
+                String tenNV = nvBUS.getNhanVienDTO(HoaDonNhapDTO.getIDNhanVien()).getHoNhanVien()+ " "
+                + nvBUS.getNhanVienDTO(HoaDonNhapDTO.getIDNhanVien()).getTenNhanVien();
+                if (tenNV.toLowerCase().contains(value.toLowerCase())
                         && HoaDonNhapDTO.getTrangThai().equals("Hiện")) // Tìm kiếm theo chuỗi thường
                 {
                     result.add(HoaDonNhapDTO);
                 }
             });
         }
-        if (type.equals("Mã nhà cung cấp")) {
+        if (type.equals("Tên nhà cung cấp")) {
             // duyệt xem mã giống mã nhập vào thì thêm vào arraylist result
+            NhaCungCapBUS nccBUS = new NhaCungCapBUS();
+            try {
+                nccBUS.docDSNCC();
+            } catch (Exception ex) {
+            }
             HoaDonNhapBUS.dshdn.forEach((HoaDonNhapDTO) -> {
-                if (HoaDonNhapDTO.getIDNhaCungCap().toLowerCase().contains(value.toLowerCase())
+                String tenNCC = nccBUS.getNhaCungCapDTO(HoaDonNhapDTO.getIDNhaCungCap()).getTenNhaCungCap();
+                if (tenNCC.toLowerCase().contains(value.toLowerCase())
                         && HoaDonNhapDTO.getTrangThai().equals("Hiện")) // Tìm kiếm theo chuỗi thường
                 {
                     result.add(HoaDonNhapDTO);

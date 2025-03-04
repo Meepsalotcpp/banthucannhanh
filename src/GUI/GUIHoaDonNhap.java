@@ -43,7 +43,7 @@ import javax.swing.event.DocumentListener;
  * @author Nguyen
  */
 public class GUIHoaDonNhap extends GUIFormContent {
-    private static String array_HoaDonNhap[]={"Mã hóa đơn","Mã nhân viên","Mã nhà cung cấp","Ngày nhập","Tổng tiền"};   
+    private static String array_HoaDonNhap[]={"Mã hóa đơn","Tên nhân viên","Tên nhà cung cấp","Ngày nhập","Tổng tiền"};   
     public GUIMyTable table_HoaDonNhap;
     private static JDialog Them;
     private static JDialog Sua;
@@ -206,7 +206,7 @@ public class GUIHoaDonNhap extends GUIFormContent {
         JLabel lbTen=new JLabel("");
         lbTen.setBorder(new TitledBorder("Tìm kiếm"));
         int x=200;
-        cbSearch = new JComboBox<>(new String[]{"Mã hóa đơn","Mã nhân viên","Mã nhà cung cấp"});
+        cbSearch = new JComboBox<>(new String[]{"Mã hóa đơn","Tên nhân viên","Tên nhà cung cấp"});
         cbSearch.setBounds(5, 20, 100, 40);
         lbTen.add(cbSearch);
         

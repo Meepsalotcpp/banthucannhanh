@@ -343,7 +343,7 @@ public class GUIFormChon extends JDialog{
     }
     //Load dữ liệu chi tiết hóa đơn lên table
     public void docDBChiTietHoaDon(String i) throws Exception {
-        Table.setHeaders(new String[]{"Mã món ăn","Số lượng","Đơn giá","Thành tiền"});
+        Table.setHeaders(new String[]{"Mã món ăn","Tên món ăn","Số lượng","Đơn vị tính","Đơn giá","Thành tiền"});
         ChiTietHoaDonBUS Bus = new ChiTietHoaDonBUS();
         if(ChiTietHoaDonBUS.cthd == null) {
             Bus.docCTHD();
@@ -355,13 +355,13 @@ public class GUIFormChon extends JDialog{
                 Table.addRow(DTO);
             }
         }
-        Table.addRow(new String[]{"","","",""});
-        Table.addRow(new String[]{"","","Tổng",String.valueOf(Tong)});
+        Table.addRow(new String[]{"","","","","",""});
+        Table.addRow(new String[]{"","","","","Tổng",String.valueOf(Tong)});
         Table.pane.setPreferredSize(new Dimension(GUImenu.width_content*90/100, 300));
     }
     //Load dữ liệu chi tiết hóa đơn nhập lên table
     public void docDBChiTietHoaDonNhap(String i) throws Exception {
-        Table.setHeaders(new String[]{"Mã nguyên liệu","Số lượng","Giá nhập","Thành tiền"});
+        Table.setHeaders(new String[]{"Mã nguyên liệu","Tên nguyên liệu","Số lượng","Đơn vị tính","Giá nhập","Thành tiền"});
         ChiTietHoaDonNhapBUS Bus = new ChiTietHoaDonNhapBUS();
         if(ChiTietHoaDonNhapBUS.dscthdn == null) {
             Bus.docCTHDN();
@@ -373,8 +373,8 @@ public class GUIFormChon extends JDialog{
                 Table.addRow(DTO);
             }
         }
-        Table.addRow(new String[]{"","","",""});
-        Table.addRow(new String[]{"","","Tổng",String.valueOf(String.format("%.1f",Tong))});
+        Table.addRow(new String[]{"","","","","",""});
+        Table.addRow(new String[]{"","","","","Tổng",String.valueOf(String.format("%.1f",Tong))});
         Table.pane.setPreferredSize(new Dimension(GUImenu.width_content*90/100, 300));
     }
     //Load dữ liệu chi tiết công thức lên table
