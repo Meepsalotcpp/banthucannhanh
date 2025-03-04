@@ -226,7 +226,7 @@ public class GUIHoaDon extends GUIFormContent {
         JLabel lbTen=new JLabel("");
         lbTen.setBorder(new TitledBorder("Tìm kiếm"));
         int x=200;
-        cbSearch = new JComboBox(new String[]{"Mã hóa đơn","Mã nhân viên","Mã khách hàng","Mã khuyến mãi"});
+        cbSearch = new JComboBox(new String[]{"Mã hóa đơn","Tên nhân viên","Tên khách hàng","Tên khuyến mãi"});
         cbSearch.setBounds(5, 20, 100, 40);
         lbTen.add(cbSearch);
         

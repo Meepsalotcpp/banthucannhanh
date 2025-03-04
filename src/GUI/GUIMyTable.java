@@ -19,6 +19,8 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import BUS.CongThucBUS;
+import BUS.KhachHangBUS;
+import BUS.KhuyenMaiBUS;
 import BUS.MonAnBUS;
 import BUS.NguyenLieuBUS;
 import BUS.NhaCungCapBUS;
@@ -156,11 +158,25 @@ public class GUIMyTable extends JPanel {
                 });
     }
     public void addRow(HoaDonDTO data) {
+        NhanVienBUS nvBUS = new NhanVienBUS();
+        KhachHangBUS khBUS = new KhachHangBUS();
+        KhuyenMaiBUS kmBUS = new KhuyenMaiBUS();
+        try {
+            nvBUS.docDSNV();
+            khBUS.docDSKH();
+            kmBUS.docDSKM();
+        } catch (Exception ex) {
+        }
+        String tenNV = nvBUS.getNhanVienDTO(data.getIDNhanVien()).getHoNhanVien()+ " "
+        + nvBUS.getNhanVienDTO(data.getIDNhanVien()).getTenNhanVien();
+        String tenKH = khBUS.getKhachHangDTO(data.getIDKhachHang()).getHoKhachHang()+ " "
+        + khBUS.getKhachHangDTO(data.getIDKhachHang()).getTenKhachHang();
+        String tenKM = kmBUS.getKhuyenMaiDTO(data.getIDKhuyenMai()).getTenChuongTrinh();
         addRow(new String[]{
                     data.getIDHoaDon(),
-                    data.getIDNhanVien(),
-                    data.getIDKhachHang(),
-                    data.getIDKhuyenMai(),
+                    tenNV,
+                    tenKH,
+                    tenKM,
                     String.valueOf(data.getNgayLap()),
                     String.valueOf((float) data.getTienGiamGia()),
                     String.valueOf((float) data.getTongTien()),
