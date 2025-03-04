@@ -185,21 +185,29 @@ public class XuatExcel {
 
             CongThucBUS ctBUS = new CongThucBUS();
             ArrayList<CongThucDTO> list = ctBUS.getCongThucDTO();
+            MonAnBUS maBUS = new MonAnBUS();
+            try {
+                maBUS.docDSMonAn();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Lỗi đọc dữ liệu!");
+            }
 
             int rownum = 0;
             Row row = sheet.createRow(rownum);
 
             row.createCell(0, CellType.STRING).setCellValue("Mã công thức");
             row.createCell(1, CellType.STRING).setCellValue("Mã món ăn");
-            row.createCell(2, CellType.STRING).setCellValue("Mô tả công thức");
+            row.createCell(2, CellType.STRING).setCellValue("Tên món ăn");
+            row.createCell(3, CellType.STRING).setCellValue("Mô tả công thức");
 
             for (CongThucDTO ct : list) {
                 rownum++;
                 row = sheet.createRow(rownum);
-
+                String tenMonAn = maBUS.getMonAnDTO(ct.getIDMonAn()).getTenMonAn();
                 row.createCell(0, CellType.STRING).setCellValue(ct.getIDCongThuc());
                 row.createCell(1, CellType.STRING).setCellValue(ct.getIDMonAn());
-                row.createCell(2, CellType.STRING).setCellValue(ct.getMoTaCongThuc());
+                row.createCell(2, CellType.STRING).setCellValue(tenMonAn);
+                row.createCell(3, CellType.STRING).setCellValue(ct.getMoTaCongThuc());
             }
             for (int i = 0; i < rownum; i++) {
                 sheet.autoSizeColumn(i);
