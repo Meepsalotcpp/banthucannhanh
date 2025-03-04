@@ -17,6 +17,15 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+
+import BUS.CongThucBUS;
+import BUS.KhachHangBUS;
+import BUS.KhuyenMaiBUS;
+import BUS.MonAnBUS;
+import BUS.NguyenLieuBUS;
+import BUS.NhaCungCapBUS;
+import BUS.NhanVienBUS;
+import BUS.Tool;
 /**
  * MyTable có nhiệm vụ add có row của các table từ database vào table trong GUI
  *
@@ -149,11 +158,25 @@ public class GUIMyTable extends JPanel {
                 });
     }
     public void addRow(HoaDonDTO data) {
+        NhanVienBUS nvBUS = new NhanVienBUS();
+        KhachHangBUS khBUS = new KhachHangBUS();
+        KhuyenMaiBUS kmBUS = new KhuyenMaiBUS();
+        try {
+            nvBUS.docDSNV();
+            khBUS.docDSKH();
+            kmBUS.docDSKM();
+        } catch (Exception ex) {
+        }
+        String tenNV = nvBUS.getNhanVienDTO(data.getIDNhanVien()).getHoNhanVien()+ " "
+        + nvBUS.getNhanVienDTO(data.getIDNhanVien()).getTenNhanVien();
+        String tenKH = khBUS.getKhachHangDTO(data.getIDKhachHang()).getHoKhachHang()+ " "
+        + khBUS.getKhachHangDTO(data.getIDKhachHang()).getTenKhachHang();
+        String tenKM = kmBUS.getKhuyenMaiDTO(data.getIDKhuyenMai()).getTenChuongTrinh();
         addRow(new String[]{
                     data.getIDHoaDon(),
-                    data.getIDNhanVien(),
-                    data.getIDKhachHang(),
-                    data.getIDKhuyenMai(),
+                    tenNV,
+                    tenKH,
+                    tenKM,
                     String.valueOf(data.getNgayLap()),
                     String.valueOf((float) data.getTienGiamGia()),
                     String.valueOf((float) data.getTongTien()),
@@ -162,10 +185,20 @@ public class GUIMyTable extends JPanel {
                 });
     }
     public void addRow(HoaDonNhapDTO data) {
+        NhanVienBUS nvBUS = new NhanVienBUS();
+        NhaCungCapBUS nccBUS = new NhaCungCapBUS();
+        try {
+            nvBUS.docDSNV();
+            nccBUS.docDSNCC();
+        } catch (Exception ex) {
+        }
+        String tenNV = nvBUS.getNhanVienDTO(data.getIDNhanVien()).getHoNhanVien()+ " "
+        + nvBUS.getNhanVienDTO(data.getIDNhanVien()).getTenNhanVien();
+        String tenNCC = nccBUS.getNhaCungCapDTO(data.getIDNhaCungCap()).getTenNhaCungCap();
         addRow(new String[]{
                     data.getIDHoaDonNhap(),
-                    data.getIDNhanVien(),
-                    data.getIDNhaCungCap(),
+                    tenNV,
+                    tenNCC,
                     String.valueOf(data.getNgayNhap()),
                     String.valueOf(String.format("%.1f",(float) data.getTongTien()))
                 });
@@ -205,24 +238,50 @@ public class GUIMyTable extends JPanel {
                 });
     }
     public void addRow(CongThucDTO data) {
+        MonAnBUS maBUS = new MonAnBUS();
+        try {
+            maBUS.docDSMonAn();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Lỗi đọc dữ liệu!");
+        }
+        String tenMonAn = maBUS.getMonAnDTO(data.getIDMonAn()).getTenMonAn();
         addRow(new String[]{
                     data.getIDCongThuc(),
                     data.getIDMonAn(),
+                    tenMonAn,
                     data.getMoTaCongThuc()
                 });
     }
     public void addRow(ChiTietHoaDonDTO data) {
+        MonAnBUS maBUS = new MonAnBUS();
+        try {
+            maBUS.docDSMonAn();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Lỗi đọc dữ liệu");
+            return;
+        }
         addRow(new String[]{
                     data.getIDMonAn(),
+                    maBUS.getMonAnDTO(data.getIDMonAn()).getTenMonAn(),
                     String.valueOf(data.getSoLuong()),
+                    maBUS.getMonAnDTO(data.getIDMonAn()).getDonViTinh(),
                     String.valueOf(data.getDonGia()),
                     String.valueOf((float) data.getThanhTien())
                 });
     }
     public void addRow(ChiTietHoaDonNhapDTO data) {
+        NguyenLieuBUS nlBUS = new NguyenLieuBUS();
+        try {
+            nlBUS.docDSNL();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Lỗi đọc dữ liệu");
+            return;
+        }
         addRow(new String[]{
                     data.getIDNguyenLieu(),
+                    nlBUS.getNguyenLieuDTO(data.getIDNguyenLieu()).getTenNguyenLieu(),
                     String.valueOf(data.getSoLuong()),
+                    nlBUS.getNguyenLieuDTO(data.getIDNguyenLieu()).getDonViTinh(),
                     String.valueOf(data.getGiaNhap()),
                     String.valueOf(String.format("%.1f",(float) data.getThanhTien()))
                 });

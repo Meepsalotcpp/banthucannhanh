@@ -11,22 +11,20 @@ import BUS.KhachHangBUS;
 import BUS.KhuyenMaiBUS;
 import BUS.MonAnBUS;
 import BUS.NguyenLieuBUS;
-import BUS.TaiKhoanBUS;
+import BUS.NhanVienBUS;
 import BUS.Tool;
 import DAO.ConnectDB;
-import DAO.MonAnDAO;
 import DTO.ChiTietHoaDonDTO;
 import DTO.HoaDonDTO;
 import DTO.KhuyenMaiDTO;
 import DTO.MonAnDTO;
 import DTO.NguyenLieuDTO;
-import Excel.MyTable;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.*;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -37,8 +35,6 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.plaf.FontUIResource;
-import java.sql.Statement;
-import java.sql.ResultSet;
 
 /**
  *
@@ -58,7 +54,7 @@ public class GUIBanHang extends GUIFormBanNhap {
     // Tạo các field chứa thông tin món ăn khi chọn
     private JTextField txMaMA, txTenMA, txDonGia, txSoLuong;
     // Tạo các field chứa thông tin hóa đơn khi thanh toán
-    private JTextField MaHD, TongTien, SDT, KhachHang, NgayLap, NhanVien, KhuyenMai, TienTra, TienThoi;
+    private JTextField MaHD, TongTien, SDT, KhachHang, tenKhachHang, NgayLap, NhanVien, tenNhanVien, KhuyenMai, tenKhuyenMai, TienTra, TienThoi;
     // Tạo các nút để phục vụ cho việc thuận tiện khi chọn mã khách hàng hay khuyến
     // mãi
     private JButton KiemTra, ChonNhanVien, ChonKhachHang, ChonKhuyenMai;
@@ -315,11 +311,14 @@ public class GUIBanHang extends GUIFormBanNhap {
         SDT = new JTextField();
         KiemTra = new JButton("Kiểm tra");
         KhachHang = new JTextField();
+        tenKhachHang = new JTextField();
         NgayLap = new JTextField();
         NhanVien = new JTextField();
+        tenNhanVien = new JTextField();
         ChonNhanVien = new JButton();
         ChonKhachHang = new JButton();
         KhuyenMai = new JTextField();
+        tenKhuyenMai = new JTextField();
         ChonKhuyenMai = new JButton();
         TienTra = new JTextField();
         TienThoi = new JTextField();
@@ -328,10 +327,10 @@ public class GUIBanHang extends GUIFormBanNhap {
         MaHD.setBorder(BorderFactory.createTitledBorder("Mã hóa đơn"));
         TongTien.setBorder(BorderFactory.createTitledBorder("Tổng tiền"));
         SDT.setBorder(BorderFactory.createTitledBorder("SDT khách hàng"));
-        KhachHang.setBorder(BorderFactory.createTitledBorder("Khách hàng"));
+        tenKhachHang.setBorder(BorderFactory.createTitledBorder("Khách hàng"));
         NgayLap.setBorder(BorderFactory.createTitledBorder("Ngày lập"));
-        NhanVien.setBorder(BorderFactory.createTitledBorder("Nhân viên"));
-        KhuyenMai.setBorder(BorderFactory.createTitledBorder("Khuyến mãi"));
+        tenNhanVien.setBorder(BorderFactory.createTitledBorder("Nhân viên"));
+        tenKhuyenMai.setBorder(BorderFactory.createTitledBorder("Khuyến mãi"));
         TienTra.setBorder(BorderFactory.createTitledBorder("Tiền trả"));
         TienThoi.setBorder(BorderFactory.createTitledBorder("Tiền thối"));
         ChonNhanVien.setIcon(new ImageIcon(this.getClass().getResource("/Images/Icon/xemchitiet-30.png")));
@@ -345,10 +344,13 @@ public class GUIBanHang extends GUIFormBanNhap {
         // disable
         MaHD.setEditable(false);
         TongTien.setEditable(false);
-        KhachHang.setEditable(false);
+        tenKhachHang.setEditable(false);
+        KhachHang.setVisible(false);
         NgayLap.setEditable(false);
-        NhanVien.setEditable(false);
-        KhuyenMai.setEditable(false);
+        NhanVien.setVisible(false);
+        tenNhanVien.setEditable(false);
+        tenKhuyenMai.setEditable(false);
+        KhuyenMai.setVisible(false);
         TienThoi.setEditable(false);
         // font
         Font f = new Font(Font.SANS_SERIF, Font.BOLD, 15);
@@ -356,10 +358,10 @@ public class GUIBanHang extends GUIFormBanNhap {
         TongTien.setFont(f);
         SDT.setFont(f);
         KiemTra.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 13));
-        KhachHang.setFont(f);
+        tenKhachHang.setFont(f);
         NgayLap.setFont(f);
-        NhanVien.setFont(f);
-        KhuyenMai.setFont(f);
+        tenNhanVien.setFont(f);
+        tenKhuyenMai.setFont(f);
         TienTra.setFont(f);
         TienThoi.setFont(f);
         // setsize
@@ -375,11 +377,11 @@ public class GUIBanHang extends GUIFormBanNhap {
         KiemTra.setOpaque(true);
 
         // ChonKhachHang.setBounds(210, y+10, 30, 30);
-        NhanVien.setBounds(300, y, 200, 40);
+        tenNhanVien.setBounds(300, y, 200, 40);
         y += 50;
         // ChonNhanVien.setBounds(500, y+10, 30, 30);y+=50;
-        KhachHang.setBounds(10, y, 200, 40);
-        KhuyenMai.setBounds(300, y, 200, 40);
+        tenKhachHang.setBounds(10, y, 200, 40);
+        tenKhuyenMai.setBounds(300, y, 200, 40);
         ChonKhuyenMai.setBounds(500, y + 10, 30, 30);
         y += 50;
         NgayLap.setBounds(10, y, 200, 40);
@@ -391,7 +393,14 @@ public class GUIBanHang extends GUIFormBanNhap {
         String ngayLap = Tool.getNgayLap().toString(); // set ngày
         NgayLap.setText(ngayLap);
         NhanVien.setText(Tool.IDNhanVienHienHanh);
-
+        NhanVienBUS nvBUS = new NhanVienBUS();
+        try {
+            nvBUS.docDSNV();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Lỗi đọc dữ liệu!");
+        }
+        tenNhanVien.setText(nvBUS.getNhanVienDTO(Tool.IDNhanVienHienHanh).getHoNhanVien() + " "+
+            nvBUS.getNhanVienDTO(Tool.IDNhanVienHienHanh).getTenNhanVien());
         if (HoaDonBUS.getMaHoaDonCuoi() != null) {
             String maHD = Tool.tangMa(HoaDonBUS.getMaHoaDonCuoi());
             MaHD.setText(maHD);
@@ -403,9 +412,12 @@ public class GUIBanHang extends GUIFormBanNhap {
         panel.add(SDT);
         panel.add(KiemTra);
         panel.add(KhachHang);
+        panel.add(tenKhachHang);
         panel.add(NgayLap);
         panel.add(NhanVien);
+        panel.add(tenNhanVien);
         panel.add(KhuyenMai);
+        panel.add(tenKhuyenMai);
         panel.add(ChonKhachHang);
         panel.add(ChonKhuyenMai);
         panel.add(TienTra);
@@ -426,6 +438,8 @@ public class GUIBanHang extends GUIFormBanNhap {
                     for (int i = 0; i < khBUS.dskh.size(); i++) {
                         if (khBUS.dskh.get(i).getSoDienThoai().equals(sdt)) {
                             KhachHang.setText(khBUS.dskh.get(i).getIDKhachHang());
+                            tenKhachHang.setText(khBUS.dskh.get(i).getHoKhachHang() + " " +
+                            khBUS.dskh.get(i).getTenKhachHang());
                             return;
                         }
                     }
@@ -437,6 +451,8 @@ public class GUIBanHang extends GUIFormBanNhap {
                         khBUS.docDSKH();
                         if(khBUS.getKhachHangDTO(maKH) != null)
                         SDT.setText(khBUS.getKhachHangDTO(maKH).getSoDienThoai());
+                        tenKhachHang.setText(khBUS.getKhachHangDTO(maKH).getHoKhachHang() + " " +
+                        khBUS.getKhachHangDTO(maKH).getTenKhachHang());
                     } else
                         return;
 
@@ -472,6 +488,14 @@ public class GUIBanHang extends GUIFormBanNhap {
             a.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosed(WindowEvent e) {
+                    KhuyenMaiBUS kmBUS = new KhuyenMaiBUS();
+                    try {
+                        kmBUS.docDSKM();
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(null, "Lỗi đọc dữ liệu");
+                        return;
+                    }
+                    tenKhuyenMai.setText(kmBUS.getKhuyenMaiDTO(String.valueOf(KhuyenMai.getText())).getTenChuongTrinh());
                     TinhTien();
                 }
 
@@ -746,7 +770,9 @@ public class GUIBanHang extends GUIFormBanNhap {
             MaHD.setText(Tool.tangMa(HoaDonBUS.getMaHoaDonCuoi()));
             SDT.setText("");
             KhachHang.setText("");
+            tenKhachHang.setText("");
             KhuyenMai.setText("");
+            tenKhuyenMai.setText("");
             NgayLap.setText(Tool.getNgayLap().toString()); // set ngày
             TongTien.setText("");
             TienTra.setText("");

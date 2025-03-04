@@ -185,21 +185,29 @@ public class XuatExcel {
 
             CongThucBUS ctBUS = new CongThucBUS();
             ArrayList<CongThucDTO> list = ctBUS.getCongThucDTO();
+            MonAnBUS maBUS = new MonAnBUS();
+            try {
+                maBUS.docDSMonAn();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Lỗi đọc dữ liệu!");
+            }
 
             int rownum = 0;
             Row row = sheet.createRow(rownum);
 
             row.createCell(0, CellType.STRING).setCellValue("Mã công thức");
             row.createCell(1, CellType.STRING).setCellValue("Mã món ăn");
-            row.createCell(2, CellType.STRING).setCellValue("Mô tả công thức");
+            row.createCell(2, CellType.STRING).setCellValue("Tên món ăn");
+            row.createCell(3, CellType.STRING).setCellValue("Mô tả công thức");
 
             for (CongThucDTO ct : list) {
                 rownum++;
                 row = sheet.createRow(rownum);
-
+                String tenMonAn = maBUS.getMonAnDTO(ct.getIDMonAn()).getTenMonAn();
                 row.createCell(0, CellType.STRING).setCellValue(ct.getIDCongThuc());
                 row.createCell(1, CellType.STRING).setCellValue(ct.getIDMonAn());
-                row.createCell(2, CellType.STRING).setCellValue(ct.getMoTaCongThuc());
+                row.createCell(2, CellType.STRING).setCellValue(tenMonAn);
+                row.createCell(3, CellType.STRING).setCellValue(ct.getMoTaCongThuc());
             }
             for (int i = 0; i < rownum; i++) {
                 sheet.autoSizeColumn(i);
@@ -252,12 +260,14 @@ public class XuatExcel {
             Row row = sheet.createRow(rownum);
 
             row.createCell(0, CellType.STRING).setCellValue("Mã hóa đơn");
-            row.createCell(1, CellType.STRING).setCellValue("Mã nhân viên");
-            row.createCell(2, CellType.STRING).setCellValue("Mã khách hàng");
-            row.createCell(3, CellType.STRING).setCellValue("Mã khuyến mãi");
+            row.createCell(1, CellType.STRING).setCellValue("Tên nhân viên");
+            row.createCell(2, CellType.STRING).setCellValue("Tên khách hàng");
+            row.createCell(3, CellType.STRING).setCellValue("Tên khuyến mãi");
             row.createCell(4, CellType.STRING).setCellValue("Ngày lập");
             row.createCell(5, CellType.STRING).setCellValue("Tiền giảm giá");
             row.createCell(6, CellType.STRING).setCellValue("Tổng tiền");
+            row.createCell(7, CellType.STRING).setCellValue("Tổng trả");
+            row.createCell(8, CellType.STRING).setCellValue("Tổng thối");
             
 //            row.createCell(7, CellType.STRING).setCellValue("Món Ăn");
 //            row.createCell(8, CellType.STRING).setCellValue("Số lượng");
@@ -268,14 +278,20 @@ public class XuatExcel {
             for (HoaDonDTO hd : list) {
                 rownum++;
                 row = sheet.createRow(rownum);
-
+            String tenNV = nvBUS.getNhanVienDTO(hd.getIDNhanVien()).getHoNhanVien()+ " "
+            + nvBUS.getNhanVienDTO(hd.getIDNhanVien()).getTenNhanVien();
+            String tenKH = khBUS.getKhachHangDTO(hd.getIDKhachHang()).getHoKhachHang()+ " "
+            + khBUS.getKhachHangDTO(hd.getIDKhachHang()).getTenKhachHang();
+            String tenKM = kmBUS.getKhuyenMaiDTO(hd.getIDKhuyenMai()).getTenChuongTrinh();
             row.createCell(0, CellType.STRING).setCellValue(hd.getIDHoaDon());
-            row.createCell(1, CellType.STRING).setCellValue(hd.getIDNhanVien());//+" - "+nvBUS.getNhanVienDTO(hd.getIDNhanVien()).getTenNhanVien());
-            row.createCell(2, CellType.STRING).setCellValue(hd.getIDKhachHang());//+" - "+khBUS.getKhachHangDTO(hd.getIDKhachHang()).getTenKhachHang());
-            row.createCell(3, CellType.STRING).setCellValue(hd.getIDKhuyenMai());//+" - "+kmBUS.getKhuyenMaiDTO(hd.getIDKhuyenMai()).getTenChuongTrinh());
+            row.createCell(1, CellType.STRING).setCellValue(tenNV);//+" - "+nvBUS.getNhanVienDTO(hd.getIDNhanVien()).getTenNhanVien());
+            row.createCell(2, CellType.STRING).setCellValue(tenKH);//+" - "+khBUS.getKhachHangDTO(hd.getIDKhachHang()).getTenKhachHang());
+            row.createCell(3, CellType.STRING).setCellValue(tenKM);//+" - "+kmBUS.getKhuyenMaiDTO(hd.getIDKhuyenMai()).getTenChuongTrinh());
             row.createCell(4, CellType.STRING).setCellValue(String.valueOf(hd.getNgayLap()));
             row.createCell(5, CellType.NUMERIC).setCellValue(hd.getTienGiamGia());
             row.createCell(6, CellType.STRING).setCellValue(hd.getTongTien());
+            row.createCell(7, CellType.STRING).setCellValue(hd.getTienTra());
+            row.createCell(8, CellType.STRING).setCellValue(hd.getTienThoi());
             
 //            for (ChiTietHoaDonDTO cthd : cthdBUS.getAllChiTiet(hd.getIDHoaDon())) {
 //                    rownum++;
@@ -340,8 +356,8 @@ public class XuatExcel {
             Row row = sheet.createRow(rownum);
 
             row.createCell(0, CellType.STRING).setCellValue("Mã hóa đơn");
-            row.createCell(1, CellType.STRING).setCellValue("Mã nhân viên");
-            row.createCell(2, CellType.STRING).setCellValue("Mã nhà cung cấp");
+            row.createCell(1, CellType.STRING).setCellValue("Tên nhân viên");
+            row.createCell(2, CellType.STRING).setCellValue("Tên nhà cung cấp");
             row.createCell(3, CellType.STRING).setCellValue("Ngày nhập");
             row.createCell(4, CellType.STRING).setCellValue("Tổng tiền");
             
@@ -349,16 +365,17 @@ public class XuatExcel {
 //            row.createCell(6, CellType.STRING).setCellValue("Số lượng");
 //            row.createCell(7, CellType.STRING).setCellValue("Giá nhập");
 //            row.createCell(8, CellType.STRING).setCellValue("Thành tiền");
-
             for (HoaDonNhapDTO hdn : list) {
                 rownum++;
                 row = sheet.createRow(rownum);
-
-            row.createCell(0, CellType.STRING).setCellValue(hdn.getIDHoaDonNhap());
-            row.createCell(1, CellType.STRING).setCellValue(hdn.getIDNhanVien());//+" - "+nvBUS.getNhanVienDTO(hdn.getIDNhanVien()).getTenNhanVien());
-            row.createCell(2, CellType.STRING).setCellValue(hdn.getIDNhaCungCap());//+" - "+nccBUS.getNhaCungCapDTO(hdn.getIDNhaCungCap()).getTenNhaCungCap());
-            row.createCell(3, CellType.STRING).setCellValue(String.valueOf(hdn.getNgayNhap()));
-            row.createCell(4, CellType.STRING).setCellValue(hdn.getTongTien());
+                String tenNV = nvBUS.getNhanVienDTO(hdn.getIDNhanVien()).getHoNhanVien()+ " "
+                + nvBUS.getNhanVienDTO(hdn.getIDNhanVien()).getTenNhanVien();
+                String tenNCC = nccBUS.getNhaCungCapDTO(hdn.getIDNhaCungCap()).getTenNhaCungCap();
+                row.createCell(0, CellType.STRING).setCellValue(hdn.getIDHoaDonNhap());
+                row.createCell(1, CellType.STRING).setCellValue(tenNV);//+" - "+nvBUS.getNhanVienDTO(hdn.getIDNhanVien()).getTenNhanVien());
+                row.createCell(2, CellType.STRING).setCellValue(tenNCC);//+" - "+nccBUS.getNhaCungCapDTO(hdn.getIDNhaCungCap()).getTenNhaCungCap());
+                row.createCell(3, CellType.STRING).setCellValue(String.valueOf(hdn.getNgayNhap()));
+                row.createCell(4, CellType.STRING).setCellValue(hdn.getTongTien());
             
 //            for (ChiTietHoaDonNhapDTO cthdn : cthdnBUS.getAllChiTiet(hdn.getIDHoaDonNhap())) {
 //                    rownum++;

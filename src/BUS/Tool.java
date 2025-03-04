@@ -389,6 +389,23 @@ public class Tool {
                     result.add(CongThucDTO);
                 }
             });
+        if (type.equals("Tên món ăn")){
+            // Tìm theo tên
+            MonAnBUS ma = new MonAnBUS();
+            try {
+                ma.docDSMonAn();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Lỗi đọc dữ liệu");
+            }
+            CongThucBUS.CT.forEach((CongThucDTO) -> {
+                String tenMA = ma.getMonAnDTO(CongThucDTO.getIDMonAn()).getTenMonAn().toLowerCase();
+                if (tenMA.contains(value.toLowerCase())
+                        && CongThucDTO.getTrangThai().equals("Hiện")) // Tìm kiếm theo chuỗi thường
+                {
+                    result.add(CongThucDTO);
+                }
+            });
+        }
         if (type.equals("Mô tả công thức"))
             // Tìm theo tên
             CongThucBUS.CT.forEach((CongThucDTO) -> {
@@ -941,20 +958,33 @@ public class Tool {
                 }
             });
         }
-        if (type.equals("Mã nhân viên")) {
+        if (type.equals("Tên nhân viên")) {
             // duyệt xem mã giống mã nhập vào thì thêm vào arraylist result
+            NhanVienBUS nvBUS = new NhanVienBUS();
+            try {
+                nvBUS.docDSNV();
+            } catch (Exception ex) {
+            }
             HoaDonNhapBUS.dshdn.forEach((HoaDonNhapDTO) -> {
-                if (HoaDonNhapDTO.getIDNhanVien().toLowerCase().contains(value.toLowerCase())
+                String tenNV = nvBUS.getNhanVienDTO(HoaDonNhapDTO.getIDNhanVien()).getHoNhanVien()+ " "
+                + nvBUS.getNhanVienDTO(HoaDonNhapDTO.getIDNhanVien()).getTenNhanVien();
+                if (tenNV.toLowerCase().contains(value.toLowerCase())
                         && HoaDonNhapDTO.getTrangThai().equals("Hiện")) // Tìm kiếm theo chuỗi thường
                 {
                     result.add(HoaDonNhapDTO);
                 }
             });
         }
-        if (type.equals("Mã nhà cung cấp")) {
+        if (type.equals("Tên nhà cung cấp")) {
             // duyệt xem mã giống mã nhập vào thì thêm vào arraylist result
+            NhaCungCapBUS nccBUS = new NhaCungCapBUS();
+            try {
+                nccBUS.docDSNCC();
+            } catch (Exception ex) {
+            }
             HoaDonNhapBUS.dshdn.forEach((HoaDonNhapDTO) -> {
-                if (HoaDonNhapDTO.getIDNhaCungCap().toLowerCase().contains(value.toLowerCase())
+                String tenNCC = nccBUS.getNhaCungCapDTO(HoaDonNhapDTO.getIDNhaCungCap()).getTenNhaCungCap();
+                if (tenNCC.toLowerCase().contains(value.toLowerCase())
                         && HoaDonNhapDTO.getTrangThai().equals("Hiện")) // Tìm kiếm theo chuỗi thường
                 {
                     result.add(HoaDonNhapDTO);
@@ -1000,30 +1030,50 @@ public class Tool {
                 }
             });
         }
-        if (type.equals("Mã nhân viên")) {
+        if (type.equals("Tên nhân viên")) {
             // duyệt xem mã giống mã nhập vào thì thêm vào arraylist result
+            NhanVienBUS nvBUS = new NhanVienBUS();
+            try {
+                nvBUS.docDSNV();
+            } catch (Exception ex) {
+            }
             HoaDonBUS.HD.forEach((HoaDonDTO) -> {
-                if (HoaDonDTO.getIDNhanVien().toLowerCase().contains(value.toLowerCase())
+                String tenNV = nvBUS.getNhanVienDTO(HoaDonDTO.getIDNhanVien()).getHoNhanVien()+ " "
+                + nvBUS.getNhanVienDTO(HoaDonDTO.getIDNhanVien()).getTenNhanVien();
+                if (tenNV.toLowerCase().contains(value.toLowerCase())
                         && HoaDonDTO.getTrangThai().equals("Hiện")) // Tìm kiếm theo chuỗi thường
                 {
                     result.add(HoaDonDTO);
                 }
             });
         }
-        if (type.equals("Mã khách hàng")) {
+        if (type.equals("Tên khách hàng")) {
             // duyệt xem mã giống mã nhập vào thì thêm vào arraylist result
+            KhachHangBUS khBUS = new KhachHangBUS();
+            try {
+                khBUS.docDSKH();
+            } catch (Exception ex) {
+            }
             HoaDonBUS.HD.forEach((HoaDonDTO) -> {
-                if (HoaDonDTO.getIDKhachHang().toLowerCase().contains(value.toLowerCase())
+                String tenKH = khBUS.getKhachHangDTO(HoaDonDTO.getIDKhachHang()).getHoKhachHang()+ " "
+                + khBUS.getKhachHangDTO(HoaDonDTO.getIDKhachHang()).getTenKhachHang();
+                if (tenKH.toLowerCase().contains(value.toLowerCase())
                         && HoaDonDTO.getTrangThai().equals("Hiện")) // Tìm kiếm theo chuỗi thường
                 {
                     result.add(HoaDonDTO);
                 }
             });
         }
-        if (type.equals("Mã khuyến mãi")) {
+        if (type.equals("Tên khuyến mãi")) {
             // duyệt xem mã giống mã nhập vào thì thêm vào arraylist result
+            KhuyenMaiBUS kmBUS = new KhuyenMaiBUS();
+            try {
+                kmBUS.docDSKM();
+            } catch (Exception ex) {
+            }
             HoaDonBUS.HD.forEach((HoaDonDTO) -> {
-                if (HoaDonDTO.getIDKhuyenMai().toLowerCase().contains(value.toLowerCase())
+                String tenKM = kmBUS.getKhuyenMaiDTO(HoaDonDTO.getIDKhuyenMai()).getTenChuongTrinh();
+                if (tenKM.toLowerCase().contains(value.toLowerCase())
                         && HoaDonDTO.getTrangThai().equals("Hiện")) // Tìm kiếm theo chuỗi thường
                 {
                     result.add(HoaDonDTO);

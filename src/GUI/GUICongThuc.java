@@ -59,7 +59,7 @@ import javax.swing.plaf.FontUIResource;
  */
 public class GUICongThuc extends GUIFormContent{
     //Tạo mảng tiêu đề
-    public static String array_CongThuc[]={"Mã công thức","Mã món ăn","Mô tả công thức"};
+    public static String array_CongThuc[]={"Mã công thức","Mã món ăn","Tên món ăn","Mô tả công thức"};
     //Tạo JTable , GUIMyTable kế thừa từ JTable và được chỉnh sửa
     public GUIMyTable table_CongThuc;
     //Tạo Dialog để thêm công thức
@@ -258,8 +258,8 @@ public class GUICongThuc extends GUIFormContent{
             y += 40;
             Them_CongThuc.add(txt_CongThuc_Them[i]);
         }
-        txt_CongThuc_Them[2].setVisible(false);
-        label_CongThuc[2].setVisible(false);
+        txt_CongThuc_Them[3].setVisible(false);
+        label_CongThuc[3].setVisible(false);
         y -= 40;
 
         txt_NguyenLieu_Them = new ArrayList<>();
@@ -327,7 +327,7 @@ public class GUICongThuc extends GUIFormContent{
                         if(i != maNL.length-1)
                             txtMota += ", ";
                     }
-                    txt_CongThuc_Them[2].setText(txtMota);
+                    txt_CongThuc_Them[3].setText(txtMota);
                     if(checkTextThem(txt_CongThuc_Them[1].getText(), txt_CongThuc_Them[2].getText()))
                     {
                         CongThucDTO DTO = new CongThucDTO(txt_CongThuc_Them[0].getText(),
@@ -529,7 +529,7 @@ public class GUICongThuc extends GUIFormContent{
         cohieu=0;
         Sua = new JDialog(f);
         Sua.setLayout(null);
-        Sua.setSize(500, 500);
+        Sua.setSize(500, 530);
         //Set vị trí của Dialog
         //https://stackoverflow.com/questions/2442599/how-to-set-jframe-to-appear-centered-regardless-of-monitor-resolution
         Sua.setLocationRelativeTo(null);
@@ -551,8 +551,9 @@ public class GUICongThuc extends GUIFormContent{
             y += 40;
             Sua.add(txt_CongThuc_Sua[i]);
         }
-        label_CongThuc[2].setVisible(false);
-        txt_CongThuc_Sua[2].setVisible(false);y -= 40;
+        label_CongThuc[3].setVisible(false);
+        txt_CongThuc_Sua[2].setEditable(false);
+        txt_CongThuc_Sua[3].setVisible(false);y -= 40;
         //Panel chứa nguyên liệu
         
         pNguyenLieuSua.setLayout(new BoxLayout(pNguyenLieuSua, BoxLayout.Y_AXIS));
@@ -645,15 +646,15 @@ public class GUICongThuc extends GUIFormContent{
                         if(i != maNL.length-1)
                             txtMota += ", ";
                     }
-                    txt_CongThuc_Sua[2].setText(txtMota);
+                    txt_CongThuc_Sua[3].setText(txtMota);
                     if(checkTextSua(
                         txt_CongThuc_Sua[1].getText(),
-                        txt_CongThuc_Sua[2].getText()
+                        txt_CongThuc_Sua[3].getText()
                         )) 
                     {   
                         CongThucDTO DTO = new CongThucDTO(txt_CongThuc_Sua[0].getText(),
                                                     txt_CongThuc_Sua[1].getText(),
-                                                    txt_CongThuc_Sua[2].getText(),
+                                                    txt_CongThuc_Sua[3].getText(),
                                                     "Hiện");
                         ChiTietNguyenLieuBUS ctnlBUS = new ChiTietNguyenLieuBUS();
                         try{
@@ -764,7 +765,7 @@ public class GUICongThuc extends GUIFormContent{
             //Tạo đối tượng monAnDTO và truyền dữ liệu trực tiếp thông qua constructor
             CongThucDTO DTO = new CongThucDTO(txt_CongThuc_Sua[0].getText(),
                                                   txt_CongThuc_Sua[1].getText(),
-                                                  txt_CongThuc_Sua[2].getText());
+                                                  txt_CongThuc_Sua[3].getText());
             //Tìm vị trí của row cần sửa
             int index = CongThucBUS.timViTri(maCongThuc);
             //Truyền dữ liệu và vị trí vào bus

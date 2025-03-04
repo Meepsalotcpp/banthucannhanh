@@ -49,7 +49,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class GUIHoaDon extends GUIFormContent {
     //Tạo mảng tiêu đề
-    private static String array_HoaDon[]={"Mã hóa đơn","Mã nhân viên","Mã khách hàng","Mã khuyến mãi","Ngày lập","Tiền giảm giá","Tổng tiền","Tiền trả","Tiền thối"};   
+    private static String array_HoaDon[]={"Mã hóa đơn","Tên nhân viên","Tên khách hàng","Tên khuyến mãi","Ngày lập","Tiền giảm giá","Tổng tiền","Tiền trả","Tiền thối"};   
     //Tạo JTable , GUIMyTable kế thừa từ JTable và được chỉnh sửa
     public GUIMyTable table_HoaDon;
     //Tạo các nút để chọn ngày
@@ -226,7 +226,7 @@ public class GUIHoaDon extends GUIFormContent {
         JLabel lbTen=new JLabel("");
         lbTen.setBorder(new TitledBorder("Tìm kiếm"));
         int x=200;
-        cbSearch = new JComboBox(new String[]{"Mã hóa đơn","Mã nhân viên","Mã khách hàng","Mã khuyến mãi"});
+        cbSearch = new JComboBox(new String[]{"Mã hóa đơn","Tên nhân viên","Tên khách hàng","Tên khuyến mãi"});
         cbSearch.setBounds(5, 20, 100, 40);
         lbTen.add(cbSearch);
         

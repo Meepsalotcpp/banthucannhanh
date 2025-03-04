@@ -6,11 +6,15 @@
 package GUI;
 
 import BUS.NguyenLieuBUS;
+import BUS.NhanVienBUS;
 import BUS.HoaDonNhapBUS;
+import BUS.KhuyenMaiBUS;
 import BUS.ChiTietHoaDonNhapBUS;
+import BUS.NhaCungCapBUS;
 import BUS.TaiKhoanBUS;
 import BUS.Tool;
 import DTO.NguyenLieuDTO;
+import DTO.NhanVienDTO;
 import DTO.ChiTietHoaDonNhapDTO;
 import DTO.HoaDonNhapDTO;
 import java.awt.Color;
@@ -46,7 +50,7 @@ public class GUINhapHang extends GUIFormBanNhap {
     private JComboBox<String> cbDonViTinh;
     private String array_DonViTinh[]={"Kg","Quả","Bịch","Lít","Lon"};
     // Tạo các field chứa thông tin hóa đơn khi thanh toán
-    private JTextField MaHDN, TongTien, NhaCungCap, NgayNhap, NhanVien;
+    private JTextField MaHDN, TongTien, NhaCungCap, tenNhaCungCap, NgayNhap, NhanVien, tenNhanVien;
     // Tạo các nút để phục vụ cho việc thuận tiện khi chọn mã khách hàng hay khuyến mãi
     private JButton ChonNhanVien, ChonNhaCungCap, Khac, btnFileAnh;
     // Tạo field tìm kiếm nguyên liệu
@@ -423,16 +427,18 @@ public class GUINhapHang extends GUIFormBanNhap {
         MaHDN = new JTextField();
         TongTien = new JTextField();
         NhaCungCap = new JTextField();
+        tenNhaCungCap = new JTextField();
         NgayNhap = new JTextField();
         NhanVien = new JTextField();
+        tenNhanVien = new JTextField();
         ChonNhanVien = new JButton();
         ChonNhaCungCap = new JButton();
         // border
         MaHDN.setBorder(BorderFactory.createTitledBorder("Mã hóa đơn nhập"));
         TongTien.setBorder(BorderFactory.createTitledBorder("Tổng tiền"));
-        NhaCungCap.setBorder(BorderFactory.createTitledBorder("Nhà cung cấp"));
+        tenNhaCungCap.setBorder(BorderFactory.createTitledBorder("Nhà cung cấp"));
         NgayNhap.setBorder(BorderFactory.createTitledBorder("Ngày nhập"));
-        NhanVien.setBorder(BorderFactory.createTitledBorder("Nhân viên"));
+        tenNhanVien.setBorder(BorderFactory.createTitledBorder("Nhân viên"));
         ChonNhanVien.setIcon(new ImageIcon(this.getClass().getResource("/Images/Icon/xemchitiet-30.png")));
         ChonNhanVien.setBorder(BorderFactory.createLineBorder(Color.decode("#90CAF9"), 1));
         ChonNhaCungCap.setIcon(new ImageIcon(this.getClass().getResource("/Images/Icon/xemchitiet-30.png")));
@@ -440,24 +446,26 @@ public class GUINhapHang extends GUIFormBanNhap {
         // disable
         MaHDN.setEditable(false);
         TongTien.setEditable(false);
-        NhaCungCap.setEditable(false);
+        tenNhaCungCap.setEditable(false);
+        NhaCungCap.setEnabled(false);
         NgayNhap.setEditable(false);
-        NhanVien.setEditable(false);
+        tenNhanVien.setEditable(false);
+        NhanVien.setVisible(false);
         // font
         Font f = new Font(Font.SANS_SERIF, Font.BOLD, 15);
         MaHDN.setFont(f);
         TongTien.setFont(f);
-        NhaCungCap.setFont(f);
+        tenNhaCungCap.setFont(f);
         NgayNhap.setFont(f);
-        NhanVien.setFont(f);
+        tenNhanVien.setFont(f);
         // setsize
         int y = 20;
         MaHDN.setBounds(10, y, 200, 40);
         TongTien.setBounds(300, y, 200, 40);
         y += 50;
-        NhaCungCap.setBounds(10, y, 200, 40);
+        tenNhaCungCap.setBounds(10, y, 200, 40);
         ChonNhaCungCap.setBounds(210, y + 10, 30, 30);
-        NhanVien.setBounds(300, y, 200, 40);
+        tenNhanVien.setBounds(300, y, 200, 40);
         ChonNhanVien.setBounds(500, y + 10, 30, 30);
         y += 50;
         NgayNhap.setBounds(10, y, 200, 40);
@@ -466,7 +474,9 @@ public class GUINhapHang extends GUIFormBanNhap {
         panel.add(MaHDN);
         panel.add(TongTien);
         panel.add(NhaCungCap);
+        panel.add(tenNhaCungCap);
         panel.add(NgayNhap);
+        panel.add(tenNhanVien);
         panel.add(NhanVien);
         panel.add(ChonNhanVien);
         panel.add(ChonNhaCungCap);
@@ -476,6 +486,14 @@ public class GUINhapHang extends GUIFormBanNhap {
         MaHDN.setText(maHoaDonNhap);
         // Lấy mã nhân viên từ tài khoản đã đăng nhập
         NhanVien.setText(Tool.IDNhanVienHienHanh);
+        NhanVienBUS nvBUS = new NhanVienBUS();
+        try {
+            nvBUS.docDSNV();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Lỗi đọc dữ liệu!");
+        }
+        tenNhanVien.setText(nvBUS.getNhanVienDTO(Tool.IDNhanVienHienHanh).getHoNhanVien() + " "+
+            nvBUS.getNhanVienDTO(Tool.IDNhanVienHienHanh).getTenNhanVien());
         String ngayNhap = Tool.getNgayLap().toString(); // set ngày
         NgayNhap.setText(ngayNhap);
         // kết thúc thêm mới
@@ -489,7 +507,20 @@ public class GUINhapHang extends GUIFormBanNhap {
                 Logger.getLogger(GUINhapHang.class.getName()).log(Level.SEVERE, null, ex);
             }
             a.setVisible(true);
+            a.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    NhaCungCapBUS nccBUS = new NhaCungCapBUS();
+                    try {
+                        nccBUS.docDSNCC();
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(null, "Lỗi đọc dữ liệu");
+                        return;
+                    }
+                    tenNhaCungCap.setText(nccBUS.getNhaCungCapDTO(String.valueOf(NhaCungCap.getText())).getTenNhaCungCap());
+                }
 
+            });
         });
         return panel;
     }
@@ -693,8 +724,9 @@ public class GUINhapHang extends GUIFormBanNhap {
                 String maHoaDonNhap = Tool.tangMa3(HoaDonNhapBUS.getMaHoaDonNhapCuoi());
                 MaHDN.setText(maHoaDonNhap);
                 NhaCungCap.setText("");
+                tenNhaCungCap.setText("");
                 NgayNhap.setText(Tool.getNgayLap().toString());
-                TongTien.setText("0");
+                TongTien.setText("");
                 ThanhToan.clear();
                 LamMoi();
             } catch (NumberFormatException ne) {
