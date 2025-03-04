@@ -770,7 +770,9 @@ public class GUIBanHang extends GUIFormBanNhap {
             MaHD.setText(Tool.tangMa(HoaDonBUS.getMaHoaDonCuoi()));
             SDT.setText("");
             KhachHang.setText("");
+            tenKhachHang.setText("");
             KhuyenMai.setText("");
+            tenKhuyenMai.setText("");
             NgayLap.setText(Tool.getNgayLap().toString()); // set ngày
             TongTien.setText("");
             TienTra.setText("");

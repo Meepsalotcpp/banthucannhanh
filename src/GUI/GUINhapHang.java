@@ -724,8 +724,9 @@ public class GUINhapHang extends GUIFormBanNhap {
                 String maHoaDonNhap = Tool.tangMa3(HoaDonNhapBUS.getMaHoaDonNhapCuoi());
                 MaHDN.setText(maHoaDonNhap);
                 NhaCungCap.setText("");
+                tenNhaCungCap.setText("");
                 NgayNhap.setText(Tool.getNgayLap().toString());
-                TongTien.setText("0");
+                TongTien.setText("");
                 ThanhToan.clear();
                 LamMoi();
             } catch (NumberFormatException ne) {
