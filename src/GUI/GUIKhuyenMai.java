@@ -659,7 +659,7 @@ public class GUIKhuyenMai extends GUIFormContent {
             JOptionPane.showMessageDialog(null, "Tiền giảm giá không được chứa ký tự đặc biệt");
             txt_KhuyenMai_Them[2].requestFocus();
         } else if (!Tool.isTenThousandToOneMil(tienGiamGia)) {
-            JOptionPane.showMessageDialog(null, "Tiền giảm giá phải nằm trong khoảng 10.000 đến 1.000.000");
+            JOptionPane.showMessageDialog(null, "Tiền giảm giá phải nằm trong khoảng 0 đến 1.000.000");
             txt_KhuyenMai_Them[2].requestFocus();
         } else if (!Tool.ngayBDTruocNgayKT(ngayBatDau, ngayKetThuc)) {
             JOptionPane.showMessageDialog(null, "Ngày kết thúc phải sau ngày bắt đầu");
@@ -677,7 +677,7 @@ public class GUIKhuyenMai extends GUIFormContent {
         return false;
     }
 
-    public boolean checkTextSua(String tenChuongTrinh, String tienGiamGia, String noiDung, String ngayBatDau, String ngayKetThuc) {
+    public boolean checkTextSua(String tenChuongTrinh, String tienGiamGia, String ngayBatDau, String ngayKetThuc, String noiDung) {
         UIManager.put("OptionPane.messageFont", new FontUIResource(new Font("Segoe UI", 0, 20)));
         if (tenChuongTrinh.equals("")
                 || tienGiamGia.equals("")
